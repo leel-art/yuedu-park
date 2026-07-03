@@ -1,0 +1,13 @@
+# 微信小程序源文件（已转为网页，不需要部署）
+app.*
+project.config.json
+sitemap.json
+pages/
+components/
+utils/
+data/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+node_modules/

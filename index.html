@@ -1,0 +1,1369 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>岳渎公园 · 山河交汇，千年潼关</title>
+<meta name="description" content="岳渎公园位于陕西省潼关县，集自然风光、历史遗迹、生态湿地于一体。提供望岳台、三河交汇、黄河古栈道、岳渎阁、潼关古城、落日崖等景点导览。">
+<meta name="keywords" content="岳渎公园,潼关,华山,黄河,三河交汇,望岳台,古栈道,潼关古城,落日崖,陕西旅游,秦岭">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="岳渎公园 · 山河交汇，千年潼关">
+<meta property="og:description" content="国家级自然风景区，黄河、渭河、洛河三水交汇之地。远眺华山，感受千年潼关。">
+<meta property="og:type" content="website">
+<link rel="canonical" href="https://yuedu-park.github.io/">
+<style>
+/* ===== CSS Reset & 变量 ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --primary: #2E7D32;
+  --primary-light: #4CAF50;
+  --primary-dark: #1B5E20;
+  --accent: #FF9800;
+  --accent-light: #FFB74D;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --text-hint: #BDBDBD;
+  --bg-white: #FFFFFF;
+  --bg-light: #F5F5F5;
+  --bg-card: #FFFFFF;
+  --divider: #E0E0E0;
+  --shadow: 0 2px 12px rgba(0,0,0,0.08);
+  --shadow-hover: 0 4px 20px rgba(0,0,0,0.12);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --max-width: 768px;
+}
+
+html { font-size: 16px; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: var(--bg-light);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ===== 页面容器 ===== */
+.app-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  min-height: 100vh;
+  background: var(--bg-light);
+  position: relative;
+}
+
+/* ===== 导航栏 ===== */
+.nav-bar {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-width);
+  z-index: 1000;
+  background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 100%);
+  padding: env(safe-area-inset-top, 12px) 16px 16px;
+  transition: background 0.3s;
+}
+.nav-bar.scrolled {
+  background: linear-gradient(180deg, var(--primary-dark) 0%, rgba(27,94,32,0.85) 100%);
+  backdrop-filter: blur(10px);
+}
+.nav-content {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+}
+.nav-title { font-size: 1.1rem; font-weight: 700; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+.nav-subtitle { font-size: 0.7rem; color: rgba(255,255,255,0.85); text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
+
+/* ===== 页面面板（SPA 视图切换） ===== */
+.page-panel { display: none; min-height: 100vh; }
+.page-panel.active { display: block; }
+
+/* ==================== 首页 ==================== */
+
+/* Hero */
+.hero-section {
+  position: relative; width: 100%; height: 60vh; min-height: 360px; max-height: 520px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #1a3a1a 0%, #2d5a2d 30%, #4a7c4a 60%, #8fbc8f 100%);
+}
+.hero-bg-pattern {
+  position: absolute; inset: 0; opacity: 0.3;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(255,200,100,0.2) 0%, transparent 40%),
+    radial-gradient(ellipse at 60% 80%, rgba(100,180,255,0.15) 0%, transparent 40%);
+}
+.hero-mountains {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+  background:
+    linear-gradient(175deg, transparent 30%, #2d4a2d 31%, #3d6a3d 55%, transparent 56%),
+    linear-gradient(170deg, transparent 45%, #1a3a1a 46%, #2d5a2d 65%, transparent 66%),
+    linear-gradient(165deg, transparent 55%, #4a6a4a 56%, #3d5a3d 80%, transparent 81%);
+  opacity: 0.6;
+}
+.hero-river {
+  position: absolute; bottom: 8%; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255,200,100,0.6), rgba(255,220,150,0.4), rgba(255,200,100,0.6), transparent);
+  animation: riverShimmer 4s ease-in-out infinite;
+}
+@keyframes riverShimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.02) 40%, rgba(0,0,0,0.55) 100%);
+}
+.hero-content {
+  position: absolute; bottom: 32px; left: 20px; right: 20px; color: #fff; z-index: 2;
+}
+.hero-title {
+  font-size: 2.4rem; font-weight: 900; letter-spacing: 6px;
+  text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+  background: linear-gradient(180deg, #fff 0%, #e8e0d0 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.hero-desc { display: block; font-size: 0.9rem; margin-top: 6px; opacity: 0.9; text-shadow: 0 1px 4px rgba(0,0,0,0.4); }
+.hero-tags { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.hero-tag {
+  background: rgba(255,255,255,0.22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 0.75rem;
+}
+
+/* 简介卡片 */
+.intro-card {
+  margin: -24px 16px 16px; background: #fff; border-radius: var(--radius-lg);
+  padding: 24px; box-shadow: var(--shadow); position: relative; z-index: 3;
+}
+.intro-header { display: flex; align-items: center; gap: 6px; margin-bottom: 12px; }
+.intro-icon { font-size: 1.2rem; }
+.intro-title-text { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+.intro-text { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.8; }
+.intro-stats { display: flex; justify-content: space-around; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--divider); }
+.stat-item { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+.stat-value { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+.stat-label { font-size: 0.7rem; color: var(--text-hint); }
+
+/* ===== 搜索栏 ===== */
+.search-section { padding: 0 16px; margin-bottom: 12px; position: relative; }
+.search-wrap {
+  display: flex; align-items: center; gap: 8px;
+  background: #fff; border-radius: 24px; padding: 10px 18px;
+  box-shadow: var(--shadow); border: 2px solid transparent;
+  transition: all 0.25s;
+}
+.search-wrap:focus-within { border-color: var(--primary); box-shadow: 0 2px 16px rgba(46,125,50,0.15); }
+.search-icon { font-size: 1.1rem; flex-shrink: 0; }
+.search-input {
+  flex: 1; border: none; outline: none; font-size: 0.88rem; color: var(--text-primary);
+  background: transparent; min-width: 0;
+}
+.search-input::placeholder { color: var(--text-hint); }
+.search-clear {
+  display: none; width: 24px; height: 24px; border-radius: 50%;
+  background: var(--divider); color: #666; border: none; font-size: 0.8rem;
+  cursor: pointer; align-items: center; justify-content: center; flex-shrink: 0; line-height: 1;
+}
+.search-clear.visible { display: flex; }
+.search-results-info { padding: 8px 16px 0; font-size: 0.78rem; color: var(--text-secondary); display: none; }
+.search-results-info.visible { display: block; }
+.search-highlight { background: #FFF9C4; padding: 1px 3px; border-radius: 3px; font-weight: 600; }
+
+/* 搜索下拉建议 */
+.search-suggestions {
+  display: none; position: absolute; top: 100%; left: 16px; right: 16px;
+  background: #fff; border-radius: var(--radius); box-shadow: 0 6px 24px rgba(0,0,0,0.15);
+  margin-top: 4px; z-index: 500; max-height: 280px; overflow-y: auto;
+}
+.search-suggestions.visible { display: block; }
+.search-suggestion-item {
+  display: flex; align-items: center; gap: 10px; padding: 12px 16px;
+  cursor: pointer; border-bottom: 1px solid #f0f0f0; transition: background 0.15s;
+}
+.search-suggestion-item:last-child { border-bottom: none; }
+.search-suggestion-item:hover { background: #E8F5E9; }
+.suggestion-icon { font-size: 1.1rem; flex-shrink: 0; }
+.suggestion-info { flex: 1; min-width: 0; }
+.suggestion-name { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); display: block; }
+.suggestion-subtitle { font-size: 0.72rem; color: var(--text-secondary); display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.no-results { text-align: center; padding: 50px 20px; color: var(--text-hint); display: none; }
+.no-results.visible { display: block; }
+.no-results-icon { font-size: 3rem; display: block; margin-bottom: 10px; }
+.no-results-text { font-size: 0.9rem; display: block; }
+
+/* 分类筛选 */
+.category-section { padding: 0 16px; margin-bottom: 8px; }
+.category-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.category-scroll::-webkit-scrollbar { display: none; }
+.category-list { display: flex; gap: 10px; padding: 4px 0; white-space: nowrap; }
+.category-item {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 10px 18px; border-radius: var(--radius); background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04); cursor: pointer; transition: all 0.25s;
+  min-width: 80px; user-select: none; flex-shrink: 0;
+}
+.category-item:hover { box-shadow: var(--shadow); }
+.category-item.active { background: var(--primary); box-shadow: 0 3px 12px rgba(46,125,50,0.3); }
+.category-item.active .category-name { color: #fff; }
+.category-icon { font-size: 1.2rem; }
+.category-name { font-size: 0.7rem; color: var(--text-secondary); font-weight: 500; }
+
+/* 景点列表 */
+.spot-section { padding: 0 16px; }
+.section-header { display: flex; justify-content: space-between; align-items: baseline; margin: 12px 0 14px; }
+.section-title-text { font-size: 1.1rem; font-weight: 700; color: var(--text-primary); }
+.section-count { font-size: 0.8rem; color: var(--text-hint); }
+.spot-list { display: flex; flex-direction: column; gap: 14px; padding-bottom: 24px; }
+
+/* 景点卡片 */
+.spot-card {
+  background: #fff; border-radius: var(--radius-lg); overflow: hidden;
+  box-shadow: var(--shadow); cursor: pointer; transition: all 0.2s;
+}
+.spot-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.spot-card:active { transform: scale(0.98); }
+.card-cover {
+  position: relative; width: 100%; height: 200px; overflow: hidden;
+  background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 50%, #a5d6a7 100%);
+}
+.card-cover-img {
+  width: 100%; height: 100%; object-fit: cover;
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9, #a5d6a7);
+}
+.cover-tag {
+  position: absolute; top: 12px; left: 12px; padding: 4px 12px;
+  background: rgba(0,0,0,0.5); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  color: #fff; font-size: 0.7rem; border-radius: 12px; z-index: 1;
+}
+.cover-video-badge {
+  position: absolute; bottom: 12px; right: 12px; width: 36px; height: 36px;
+  background: var(--primary); border-radius: 50%; display: flex;
+  align-items: center; justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3); z-index: 1;
+}
+.cover-video-badge::after { content: '▶'; color: #fff; font-size: 0.65rem; margin-left: 2px; }
+.card-body { padding: 16px 20px; }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+.card-name { font-size: 1.15rem; font-weight: 700; color: var(--text-primary); }
+.card-duration { display: flex; align-items: center; gap: 3px; padding: 3px 10px; background: rgba(76,175,80,0.08); border-radius: 12px; font-size: 0.7rem; color: var(--primary); }
+.card-subtitle { font-size: 0.8rem; color: var(--accent); display: block; margin-bottom: 6px; }
+.card-desc {
+  font-size: 0.78rem; color: var(--text-secondary); line-height: 1.55;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2;
+  overflow: hidden; margin-bottom: 12px;
+}
+.card-footer { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--divider); }
+.card-location { display: flex; align-items: center; gap: 3px; font-size: 0.7rem; color: var(--text-hint); max-width: 65%; overflow: hidden; }
+.card-location span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.card-action { display: flex; align-items: center; gap: 2px; font-size: 0.8rem; color: var(--primary); font-weight: 600; }
+.card-action-arrow { font-size: 1.2rem; line-height: 1; }
+
+/* 空状态 */
+.empty-state { display: flex; flex-direction: column; align-items: center; padding: 60px 0; gap: 12px; }
+.empty-icon { font-size: 3rem; }
+.empty-text { font-size: 0.9rem; color: var(--text-hint); }
+
+/* 扫码提示 */
+.scan-tip {
+  position: fixed; bottom: 30px; left: 30px; right: 30px; z-index: 200;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border-radius: var(--radius-lg); padding: 24px;
+  box-shadow: 0 6px 30px rgba(46,125,50,0.45);
+  animation: slideUp 0.4s ease-out; cursor: pointer;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.scan-tip-content { display: flex; flex-direction: column; align-items: center; gap: 8px; color: #fff; text-align: center; }
+.scan-tip-icon { font-size: 2rem; }
+.scan-tip-text { font-size: 0.9rem; line-height: 1.5; white-space: pre-line; }
+.scan-tip-close { font-size: 0.75rem; opacity: 0.7; margin-top: 4px; }
+
+/* ==================== 详情页 ==================== */
+
+.detail-page { background: var(--bg-light); }
+.detail-nav {
+  position: fixed; top: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: var(--max-width); z-index: 100;
+  display: flex; align-items: center; padding: env(safe-area-inset-top, 10px) 12px 10px;
+  gap: 8px; background: rgba(46,125,50,0.95); backdrop-filter: blur(10px);
+}
+.detail-nav .back-btn {
+  display: flex; align-items: center; gap: 2px; color: #fff; font-size: 0.9rem;
+  padding: 6px 12px; border-radius: 20px; background: rgba(255,255,255,0.15);
+  cursor: pointer; border: none; white-space: nowrap;
+}
+.detail-nav .back-icon { font-size: 1.4rem; font-weight: 300; line-height: 1; }
+.detail-nav .detail-nav-title { font-size: 1rem; font-weight: 700; color: #fff; flex: 1; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.detail-nav .nav-spacer { width: 60px; }
+
+/* 图片轮播 */
+.gallery-section { position: relative; width: 100%; height: 300px; overflow: hidden; }
+.gallery-track { display: flex; height: 100%; transition: transform 0.5s ease; will-change: transform; }
+.gallery-slide { min-width: 100%; height: 100%; position: relative; }
+.gallery-img {
+  width: 100%; height: 100%; object-fit: cover;
+  background: linear-gradient(135deg, #dcedc8 0%, #aed581 50%, #8bc34a 100%);
+}
+.gallery-dots {
+  position: absolute; bottom: 16px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 8px; z-index: 5;
+}
+.gallery-dot {
+  width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4);
+  transition: all 0.3s; cursor: pointer;
+}
+.gallery-dot.active { background: #fff; width: 24px; border-radius: 4px; }
+.gallery-actions { position: absolute; bottom: 48px; right: 16px; z-index: 5; }
+.gallery-video-btn {
+  display: flex; align-items: center; gap: 6px; padding: 10px 18px;
+  border-radius: 24px; background: rgba(0,0,0,0.55); backdrop-filter: blur(8px);
+  color: #fff; font-size: 0.8rem; font-weight: 500; cursor: pointer; border: none;
+}
+
+/* 景点信息 */
+.detail-spot-info {
+  margin: -24px 16px 14px; background: #fff; border-radius: var(--radius-lg);
+  padding: 24px; box-shadow: var(--shadow); position: relative; z-index: 2;
+}
+.detail-info-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.detail-spot-name { font-size: 1.5rem; font-weight: 800; color: var(--text-primary); display: block; }
+.detail-spot-subtitle { font-size: 0.8rem; color: var(--text-secondary); margin-top: 4px; display: block; }
+.detail-spot-tag {
+  display: inline-block; padding: 5px 14px; background: rgba(76,175,80,0.1);
+  color: var(--primary); border-radius: 16px; font-size: 0.7rem; font-weight: 500;
+  white-space: nowrap; flex-shrink: 0; margin-left: 8px;
+}
+.detail-location-row {
+  display: flex; align-items: center; gap: 6px; padding: 12px 0;
+  border-top: 1px solid var(--divider); border-bottom: 1px solid var(--divider);
+  margin-bottom: 14px; cursor: pointer;
+}
+.detail-location-text { flex: 1; font-size: 0.82rem; color: var(--text-secondary); }
+.detail-location-nav { font-size: 0.78rem; color: var(--primary); font-weight: 500; }
+.detail-desc-label { font-size: 0.95rem; font-weight: 700; color: var(--text-primary); display: block; margin-bottom: 8px; }
+.detail-desc-text { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.8; }
+
+/* 视频嵌入区 */
+.video-inline-section { margin: 0 16px 14px; background: #fff; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow); }
+.video-inline-header { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px 0; }
+.video-inline-title { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.video-inline-badge { font-size: 0.7rem; color: var(--accent); background: rgba(255,152,0,0.1); padding: 4px 12px; border-radius: 12px; }
+.video-placeholder-area {
+  margin: 14px 20px 20px; height: 220px; border-radius: var(--radius); overflow: hidden;
+  background: linear-gradient(135deg, #263238 0%, #37474f 50%, #455a64 100%);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  cursor: pointer; position: relative;
+}
+.video-placeholder-play {
+  width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
+  color: var(--primary); box-shadow: 0 3px 16px rgba(0,0,0,0.3);
+  transition: transform 0.2s;
+}
+.video-placeholder-area:hover .video-placeholder-play { transform: scale(1.08); }
+.video-placeholder-text { color: rgba(255,255,255,0.85); font-size: 0.85rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+
+/* 详细讲解 */
+.detail-section { margin: 0 16px 14px; background: #fff; border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--shadow); }
+.detail-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.detail-title-text { font-size: 1rem; font-weight: 700; color: var(--text-primary); }
+.audio-badge {
+  display: flex; align-items: center; gap: 4px; padding: 8px 14px;
+  background: rgba(76,175,80,0.1); color: var(--primary); border-radius: 18px;
+  font-size: 0.75rem; font-weight: 500; cursor: pointer; border: 1px solid rgba(76,175,80,0.2);
+  transition: all 0.2s; user-select: none;
+}
+.audio-badge.playing { background: var(--primary); color: #fff; animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.7; } }
+.audio-progress { margin-bottom: 18px; }
+.progress-bar { height: 4px; background: var(--divider); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: width 0.3s; }
+.progress-text { font-size: 0.7rem; color: var(--text-hint); margin-top: 6px; display: block; }
+
+.detail-card { padding: 18px; border-radius: var(--radius); background: #FAFAFA; margin-bottom: 12px; }
+.detail-card:last-child { margin-bottom: 0; }
+.detail-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.detail-card-icon { font-size: 1.2rem; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.detail-card-title-text { font-size: 0.9rem; font-weight: 600; color: var(--text-primary); }
+.detail-card-content { font-size: 0.82rem; color: var(--text-secondary); line-height: 1.8; padding-left: 46px; }
+
+/* 游览贴士 */
+.tips-section {
+  margin: 0 16px 14px; background: #FFF8E1; border-radius: var(--radius-lg);
+  padding: 20px 24px; border-left: 4px solid var(--accent);
+}
+.tips-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+.tips-title-text { font-size: 0.9rem; font-weight: 700; color: #E65100; }
+.tips-text { font-size: 0.78rem; color: #BF360C; line-height: 1.7; }
+
+/* 底部操作栏 */
+.detail-bottom-bar {
+  display: flex; gap: 12px; padding: 14px 16px; background: #fff;
+  box-shadow: 0 -3px 16px rgba(0,0,0,0.06); position: sticky; bottom: 0; z-index: 10;
+}
+.detail-bar-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 14px; border-radius: var(--radius); font-size: 0.9rem; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.detail-bar-btn.primary { background: var(--primary); color: #fff; }
+.detail-bar-btn.primary:hover { background: var(--primary-dark); }
+.detail-bar-btn.outline { background: #fff; color: var(--primary); border: 1.5px solid var(--divider); }
+.detail-bar-btn.outline:hover { background: var(--bg-light); }
+
+/* ==================== 视频页 ==================== */
+
+.video-page { background: #000; min-height: 100vh; color: #fff; }
+.video-page .detail-nav { background: transparent; }
+.video-player-area {
+  width: 100%; height: 50vh; min-height: 280px; background: #111;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  cursor: pointer; position: relative;
+}
+.video-player-area .big-play {
+  width: 70px; height: 70px; border-radius: 50%; background: rgba(255,255,255,0.9);
+  display: flex; align-items: center; justify-content: center;
+}
+.video-player-area .big-play::after {
+  content: ''; width: 0; height: 0;
+  border-left: 22px solid var(--primary);
+  border-top: 14px solid transparent; border-bottom: 14px solid transparent;
+  margin-left: 5px;
+}
+.video-play-label { color: rgba(255,255,255,0.9); font-size: 0.9rem; margin-top: 8px; }
+
+.video-info-card { background: #1a1a1a; margin: 0 16px 14px; border-radius: var(--radius-lg); padding: 20px; }
+.vi-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+.vi-spot-name { font-size: 1.3rem; font-weight: 800; color: #fff; display: block; }
+.vi-spot-subtitle { font-size: 0.78rem; color: #999; display: block; margin-top: 3px; }
+.vi-duration-badge { background: var(--accent); color: #fff; padding: 4px 14px; border-radius: 14px; font-size: 0.7rem; font-weight: 700; white-space: nowrap; }
+.vi-progress-bar { height: 3px; background: #333; border-radius: 2px; overflow: hidden; margin-bottom: 14px; }
+.vi-progress-fill { height: 100%; background: var(--primary-light); border-radius: 2px; width: 0%; transition: width 0.3s; }
+.vi-desc { border-top: 1px solid #333; padding-top: 14px; }
+.vi-desc-label { font-size: 0.75rem; color: #888; display: block; margin-bottom: 6px; }
+.vi-desc-text { font-size: 0.82rem; color: #bbb; line-height: 1.7; }
+
+.video-actions { display: flex; gap: 12px; padding: 0 16px; }
+.va-btn {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px;
+  padding: 14px; border-radius: var(--radius); font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; border: none; transition: all 0.2s;
+}
+.va-btn.primary { background: var(--primary); color: #fff; }
+.va-btn.primary:hover { background: var(--primary-dark); }
+.va-btn.outline { background: transparent; color: var(--primary-light); border: 1.5px solid #333; }
+.va-btn.outline:hover { background: rgba(255,255,255,0.05); }
+
+.scan-marker {
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  margin: 18px 16px; padding: 14px; background: rgba(76,175,80,0.12);
+  border-radius: var(--radius); border: 1px solid rgba(76,175,80,0.25);
+  font-size: 0.8rem; color: var(--primary-light);
+}
+
+/* ==================== 响应式 ==================== */
+@media (min-width: 768px) {
+  .hero-section { height: 480px; max-height: 520px; }
+  .hero-title { font-size: 3rem; }
+  .card-cover { height: 240px; }
+  .gallery-section { height: 400px; }
+  .spot-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .video-player-area { height: 450px; }
+}
+
+@media (min-width: 1024px) {
+  .spot-list { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ===== 返回顶部按钮 ===== */
+.back-to-top {
+  position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px;
+  border-radius: 50%; background: var(--primary); color: #fff; border: none;
+  font-size: 1.2rem; cursor: pointer; box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  display: none; align-items: center; justify-content: center; z-index: 300;
+  transition: all 0.3s;
+}
+.back-to-top.visible { display: flex; }
+.back-to-top:hover { background: var(--primary-dark); transform: translateY(-2px); }
+
+/* 底部安全区 */
+.bottom-safe { height: env(safe-area-inset-bottom, 16px); }
+
+/* 页脚 */
+.app-footer {
+  text-align: center; padding: 24px 16px; color: var(--text-hint); font-size: 0.72rem;
+}
+</style>
+</head>
+<body>
+
+<div class="app-container" id="app">
+
+  <!-- ==================== 首页 ==================== -->
+  <div class="page-panel active" id="page-home">
+    <!-- 导航栏 -->
+    <div class="nav-bar" id="homeNav">
+      <div class="nav-content">
+        <div class="nav-title">🏞️ 岳渎公园</div>
+        <div class="nav-subtitle">山河交汇 · 千年潼关</div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="hero-section">
+      <div class="hero-bg-pattern"></div>
+      <div class="hero-mountains"></div>
+      <div class="hero-river"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1 class="hero-title">岳渎公园</h1>
+        <span class="hero-desc">国家级自然风景区 · 三河交汇之地</span>
+        <div class="hero-tags">
+          <span class="hero-tag">🌊 黄河风光</span>
+          <span class="hero-tag">🏔️ 华山远眺</span>
+          <span class="hero-tag">📜 千年潼关</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 简介卡片 -->
+    <div class="intro-card">
+      <div class="intro-header">
+        <span class="intro-icon">📍</span>
+        <span class="intro-title-text">景区简介</span>
+      </div>
+      <p class="intro-text">岳渎公园位于陕西省潼关县，地处秦岭北麓、黄河西岸，因"岳"（西岳华山）与"渎"（大河黄河）在此交汇而得名。公园集自然风光、历史遗迹、生态湿地于一体，是领略黄河文明、感受山河壮美的绝佳目的地。</p>
+      <div class="intro-stats">
+        <div class="stat-item"><span class="stat-value" id="statSpots">6</span><span class="stat-label">景点</span></div>
+        <div class="stat-item"><span class="stat-value">12km²</span><span class="stat-label">占地面积</span></div>
+        <div class="stat-item"><span class="stat-value">AAAA</span><span class="stat-label">景区级别</span></div>
+        <div class="stat-item"><span class="stat-value">2k+</span><span class="stat-label">年历史</span></div>
+      </div>
+    </div>
+
+    <!-- 搜索栏 -->
+    <div class="search-section" id="searchSection">
+      <div class="search-wrap">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput"
+               placeholder="搜索景点、历史、地理..." autocomplete="off"
+               oninput="onSearchInput(this.value)" onfocus="onSearchFocus()" onblur="onSearchBlur()">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+      </div>
+      <div class="search-suggestions" id="searchSuggestions"></div>
+    </div>
+    <div class="search-results-info" id="searchResultsInfo"></div>
+
+    <!-- 分类筛选 -->
+    <div class="category-section">
+      <div class="category-scroll">
+        <div class="category-list" id="categoryList"></div>
+      </div>
+    </div>
+
+    <!-- 景点列表 -->
+    <div class="spot-section">
+      <div class="section-header">
+        <span class="section-title-text" id="sectionTitle">🗺️ 全部景点</span>
+        <span class="section-count" id="sectionCount">共 6 个</span>
+      </div>
+      <div class="spot-list" id="spotList"></div>
+      <div class="empty-state" id="emptyState" style="display:none">
+        <span class="empty-icon">🏕️</span>
+        <span class="empty-text">该分类下暂无景点</span>
+      </div>
+    </div>
+
+    <!-- 扫码提示 -->
+    <div class="scan-tip" id="scanTip">
+      <div class="scan-tip-content">
+        <span class="scan-tip-icon">📱</span>
+        <span class="scan-tip-text">在各景点扫描二维码<br>即可观看视频讲解</span>
+        <span class="scan-tip-close">点击关闭</span>
+      </div>
+    </div>
+
+    <div class="bottom-safe"></div>
+    <div class="app-footer">岳渎公园 · 山河交汇，千年潼关</div>
+  </div>
+
+  <!-- ==================== 景点详情页 ==================== -->
+  <div class="page-panel detail-page" id="page-detail">
+    <div class="detail-nav">
+      <button class="back-btn" onclick="navigateTo('home')">
+        <span class="back-icon">‹</span> 返回
+      </button>
+      <span class="detail-nav-title" id="detailNavTitle">景点讲解</span>
+      <div class="nav-spacer"></div>
+    </div>
+
+    <!-- 图片轮播 -->
+    <div class="gallery-section" id="gallerySection">
+      <div class="gallery-track" id="galleryTrack"></div>
+      <div class="gallery-dots" id="galleryDots"></div>
+      <div class="gallery-actions">
+        <button class="gallery-video-btn" id="galleryVideoBtn">▶️ 观看视频讲解</button>
+      </div>
+    </div>
+
+    <!-- 景点信息 -->
+    <div class="detail-spot-info">
+      <div class="detail-info-header">
+        <div style="flex:1">
+          <span class="detail-spot-name" id="detailSpotName"></span>
+          <span class="detail-spot-subtitle" id="detailSpotSubtitle"></span>
+        </div>
+        <span class="detail-spot-tag" id="detailSpotTag"></span>
+      </div>
+      <div class="detail-location-row" id="detailLocationRow">
+        <span>📍</span>
+        <span class="detail-location-text" id="detailLocationText"></span>
+        <span class="detail-location-nav">导航 ›</span>
+      </div>
+      <div class="detail-desc-section">
+        <span class="detail-desc-label">景点简介</span>
+        <p class="detail-desc-text" id="detailDesc"></p>
+      </div>
+    </div>
+
+    <!-- 视频嵌入区 -->
+    <div class="video-inline-section">
+      <div class="video-inline-header">
+        <span class="video-inline-title">🎬 景点视频介绍</span>
+        <span class="video-inline-badge">推荐观看</span>
+      </div>
+      <div class="video-placeholder-area" id="detailVideoPlaceholder">
+        <div class="video-placeholder-play">▶</div>
+        <span class="video-placeholder-text">点击播放视频讲解</span>
+      </div>
+    </div>
+
+    <!-- 详细讲解 -->
+    <div class="detail-section">
+      <div class="detail-header">
+        <span class="detail-title-text">📖 详细讲解</span>
+        <div class="audio-badge" id="audioBadge" onclick="toggleAudio()">🔊 语音播放</div>
+      </div>
+      <div class="audio-progress" id="audioProgress" style="display:none">
+        <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        <span class="progress-text" id="progressText">语音讲解中... 0/0分钟</span>
+      </div>
+      <div id="detailCards"></div>
+    </div>
+
+    <!-- 游览贴士 -->
+    <div class="tips-section">
+      <div class="tips-header"><span>💡</span><span class="tips-title-text">游览贴士</span></div>
+      <p class="tips-text" id="detailTips"></p>
+    </div>
+
+    <!-- 底部操作栏 -->
+    <div class="detail-bottom-bar">
+      <button class="detail-bar-btn primary" id="detailVideoBtn">▶️ 观看视频讲解</button>
+      <button class="detail-bar-btn outline" onclick="navigateTo('home')">🏠 返回首页</button>
+    </div>
+    <div class="bottom-safe"></div>
+  </div>
+
+  <!-- ==================== 视频页 ==================== -->
+  <div class="page-panel video-page" id="page-video">
+    <div class="detail-nav">
+      <button class="back-btn" onclick="goBackFromVideo()">
+        <span class="back-icon">‹</span> 返回
+      </button>
+      <span class="detail-nav-title" id="videoNavTitle">视频讲解</span>
+      <div class="nav-spacer"></div>
+    </div>
+
+    <div style="padding-top: 55px;"></div>
+
+    <div class="video-player-area" id="videoPlayerArea">
+      <div class="big-play"></div>
+      <span class="video-play-label">视频讲解</span>
+    </div>
+
+    <div class="video-info-card">
+      <div class="vi-header">
+        <div>
+          <span class="vi-spot-name" id="viSpotName"></span>
+          <span class="vi-spot-subtitle" id="viSpotSubtitle"></span>
+        </div>
+        <span class="vi-duration-badge" id="viDuration">00:00</span>
+      </div>
+      <div class="vi-progress-bar"><div class="vi-progress-fill" id="viProgressFill"></div></div>
+      <div class="vi-desc">
+        <span class="vi-desc-label" id="viDescLabel"></span>
+        <p class="vi-desc-text" id="viDescText"></p>
+      </div>
+    </div>
+
+    <div class="video-actions">
+      <button class="va-btn primary" id="videoToDetailBtn">📖 查看详细讲解</button>
+      <button class="va-btn outline" id="videoNextBtn" style="display:none">▶️ 下一个景点</button>
+    </div>
+
+    <div class="scan-marker" id="scanMarker" style="display:none">
+      <span>📱</span> <span>已为您自动定位到此景点</span>
+    </div>
+
+    <div class="bottom-safe"></div>
+  </div>
+
+  <!-- 返回顶部 -->
+  <button class="back-to-top" id="backToTop" onclick="scrollToTop()">↑</button>
+
+</div>
+
+<script>
+// ==================== 数据层 ====================
+const spots = [
+  {
+    id: 'spot_001', name: '望岳台', subtitle: '远眺西岳华山的绝佳位置', category: '观景台',
+    coverGradient: 'linear-gradient(160deg, #4a6741 0%, #7b9f6e 40%, #b8d4a8 100%)',
+    galleryGradients: [
+      'linear-gradient(160deg, #5a7a51 0%, #8aaf7e 50%, #c8e4b8 100%)',
+      'linear-gradient(160deg, #3d5a35 0%, #6d8f5e 50%, #a0c898 100%)',
+      'linear-gradient(160deg, #4a6040 0%, #7d9f6a 50%, #b5d0a5 100%)'
+    ],
+    videoUrl: '', location: { lat: 34.5432, lng: 110.2456, address: '岳渎公园·望岳台' },
+    description: '望岳台位于岳渎公园制高点，海拔约680米。此处视野开阔，天气晴好时可清晰远眺西岳华山（海拔2154米）的巍峨轮廓，是摄影爱好者和登山游客必到的打卡点。',
+    detail: [
+      { icon: '📖', title: '名称由来', content: '"望岳"取自杜甫《望岳》诗意——"岱宗夫如何，齐鲁青未了"。站于此台，华山群峰尽收眼底，故得名"望岳台"。' },
+      { icon: '🏔️', title: '地理特色', content: '望岳台地处秦岭北麓与渭河平原的交界地带，是秦岭造山带与华北地台的接触带。远望华山，可见其花岗岩峰林地貌的壮丽景观，五座主峰如莲花般绽放。' },
+      { icon: '📸', title: '最佳观赏时间', content: '春秋两季为最佳。清晨日出时分，华山东峰沐浴在金色晨光中；傍晚夕阳西下，群峰染上暖橙色余晖。雨后初晴时可见云海翻涌于山间。' },
+      { icon: '🎧', title: '语音导览', content: '站在望岳台上，您可以看到正南方向约30公里处的华山主峰群。从左至右依次为：北峰（云台峰）、中峰（玉女峰）、东峰（朝阳峰）、南峰（落雁峰）、西峰（莲花峰）。其中南峰是华山最高峰，也是五岳中的最高点。' }
+    ],
+    tips: '建议携带望远镜或长焦镜头，早晚温差较大请注意添衣。', duration: 15
+  },
+  {
+    id: 'spot_002', name: '三河交汇观景台', subtitle: '黄河、渭河、洛河三水交汇之地', category: '观景台',
+    coverGradient: 'linear-gradient(160deg, #3a5068 0%, #5a8098 40%, #8ab8d4 100%)',
+    galleryGradients: [
+      'linear-gradient(160deg, #4a6078 0%, #6a90a8 50%, #9ac8e4 100%)',
+      'linear-gradient(160deg, #2d4058 0%, #5a7898 50%, #8ab0d0 100%)'
+    ],
+    videoUrl: '', location: { lat: 34.5512, lng: 110.2534, address: '岳渎公园·三河交汇观景台' },
+    description: '这里是黄河、渭河、洛河三条大河的汇聚之处。站在观景台上，可见黄河自北而来，渭河自西而来，洛河自南而来，三水在此相交，形成"三河汇流"的壮观景象。',
+    detail: [
+      { icon: '🌊', title: '水文奇观', content: '三河交汇是黄河中游最壮观的水文景观之一。黄河水浑浊如金，渭河水清澈如碧，洛河水则介于两者之间。三色水流交汇时，形成了独特的"泾渭分明"升级版——"三色分明"的奇景。' },
+      { icon: '📜', title: '历史意义', content: '三河交汇处自古以来就是兵家必争之地。潼关因地处三河交汇的咽喉要道，被誉为"天下第一关"。历代王朝在此设关驻守，见证了无数历史风云。' },
+      { icon: '🦅', title: '生态环境', content: '三河交汇形成的湿地生态系统是重要的候鸟迁徙中转站。每年春秋两季，大量候鸟在此栖息觅食，是观鸟爱好者的天堂。常见鸟类包括白鹭、灰鹤、大雁等。' },
+      { icon: '🎧', title: '语音导览', content: '您现在看到的是中国第二大河流黄河与其两大支流的交汇处。黄河每年携带约16亿吨泥沙经过此处，渭河和洛河的汇入对黄河水量有显著的调节作用。前方可见的是一座明代修建的古渡口遗址。' }
+    ],
+    tips: '雨后或汛期时水流更壮观，但请注意安全，勿翻越护栏。', duration: 12
+  },
+  {
+    id: 'spot_003', name: '黄河古栈道', subtitle: '千年古栈道，感受黄河文明', category: '人文遗迹',
+    coverGradient: 'linear-gradient(160deg, #5a4030 0%, #8a6a50 40%, #b89878 100%)',
+    galleryGradients: [
+      'linear-gradient(160deg, #6a5040 0%, #9a7a60 50%, #c8a888 100%)',
+      'linear-gradient(160deg, #453020 0%, #7a5a40 50%, #b09070 100%)'
+    ],
+    videoUrl: '', location: { lat: 34.5487, lng: 110.2610, address: '岳渎公园·黄河古栈道' },
+    description: '黄河古栈道沿黄河西岸悬崖绝壁开凿，全长约3公里，始建于汉代，距今已有两千余年历史。走在古栈道上，脚下是奔腾的黄河水，两侧是陡峭的峡谷绝壁。',
+    detail: [
+      { icon: '🏗️', title: '工程奇迹', content: '古栈道是在黄河岸边陡峭的石灰岩崖壁上开凿出来的。古人使用简单的铁锤和凿子，在近百米高的悬崖上凿出宽约1.5米的通道。栈道上有凿孔遗迹，原用于插入横木铺设木板。' },
+      { icon: '📜', title: '历史沿革', content: '栈道始建于西汉时期，最初用于军事运输和商贸往来。隋唐时期达到鼎盛，是连接关中与中原的重要通道。明清时期逐渐废弃，但崖壁上的凿痕和石刻依然清晰可见。' },
+      { icon: '🗿', title: '摩崖石刻', content: '栈道沿途有多处摩崖石刻，最早可追溯到唐代。其中最著名的是"黄河天险"四个大字，据传为明代所刻。沿途还有多处佛像石刻和诗词题记。' },
+      { icon: '🎧', title: '语音导览', content: '您现在行走的这段栈道是保存最完好的部分，长约800米。请注意观察崖壁上的方形凿孔——这些是汉代栈道的原始遗迹。前方约200米处有一处唐代摩崖石刻，刻有"天河"二字。' }
+    ],
+    tips: '栈道部分路段较窄，请注意脚下安全，建议穿防滑鞋。', duration: 18
+  },
+  {
+    id: 'spot_004', name: '岳渎阁', subtitle: '登阁览胜，品读山水诗意', category: '建筑',
+    coverGradient: 'linear-gradient(160deg, #6a3040 0%, #9a5060 40%, #c87888 100%)',
+    galleryGradients: [
+      'linear-gradient(160deg, #7a4050 0%, #aa6070 50%, #d88898 100%)',
+      'linear-gradient(160deg, #552030 0%, #8a4050 50%, #c06878 100%)'
+    ],
+    videoUrl: '', location: { lat: 34.5465, lng: 110.2489, address: '岳渎公园·岳渎阁' },
+    description: '岳渎阁是公园的标志性建筑，高约36米，共五层。阁名取"岳"（山）与"渎"（大河）之意，寓意山河交汇、天地交融。登上阁顶，可将整个三河交汇景观尽收眼底。',
+    detail: [
+      { icon: '🏯', title: '建筑风格', content: '岳渎阁采用仿唐建筑风格，重檐歇山顶，朱红柱子配以青灰瓦片。阁内设有环形楼梯，每层都有环绕阳台，游客可从不同高度欣赏周边风光。' },
+      { icon: '🎨', title: '文化内涵', content: '阁内每层陈列不同的文化主题：一层为"山河地理"展示区，二层为"历史名人"展示区（展示与潼关相关的历史人物如曹操、郭子仪等），三层为"诗词文化"展示区，四层为观景茶室，五层为360度观景平台。' },
+      { icon: '🔭', title: '景观视野', content: '从岳渎阁五层远眺，北可望黄河蜿蜒东去，西可观秦岭群峰连绵，南可览华山雄姿，东可见中原大地辽阔无垠。天气晴好时，视野可达50公里以上。' },
+      { icon: '🎧', title: '语音导览', content: '您现在位于岳渎阁第五层观景平台。向北看，黄河如金色飘带蜿蜒东流；向西看，秦岭山脉层峦叠嶂；向南看，华山五峰清晰可见；向东看，广阔的平原延伸到天际。这里是整个公园最佳的360度全景拍摄点。' }
+    ],
+    tips: '阁内有电梯可直达五层，每层均有休息区。日落时分登阁景色最美。', duration: 20
+  },
+  {
+    id: 'spot_005', name: '潼关古城遗址', subtitle: '天下第一关的历史回响', category: '历史遗迹',
+    coverGradient: 'linear-gradient(160deg, #4a4a3a 0%, #7a7a5a 40%, #b0b088 100%)',
+    galleryGradients: [
+      'linear-gradient(160deg, #5a5a4a 0%, #8a8a6a 50%, #c0c098 100%)',
+      'linear-gradient(160deg, #353525 0%, #6a6a4a 50%, #a0a078 100%)',
+      'linear-gradient(160deg, #4a4535 0%, #7a7555 50%, #b0a878 100%)'
+    ],
+    videoUrl: '', location: { lat: 34.5530, lng: 110.2580, address: '岳渎公园·潼关古城遗址' },
+    description: '潼关古城始建于东汉，距今已有1800多年历史。作为"天下第一关"，潼关扼守关中与中原的咽喉要道，自古为兵家必争之地。现存遗址包括城墙残段、城门基址和烽火台遗迹。',
+    detail: [
+      { icon: '⚔️', title: '军事要塞', content: '潼关地处黄河与秦岭之间的狭窄通道，宽仅数公里，是关中平原的东大门。历代在此发生的著名战役超过百次。唐代安史之乱中，哥舒翰率二十万大军在此与安禄山决战。' },
+      { icon: '🏛️', title: '考古发现', content: '近年来考古发掘在遗址区发现了汉代至明清的多层文化堆积，出土了大量兵器、钱币、陶瓷器等文物。其中最珍贵的是东汉时期的"潼关令印"铜印和唐代的守关将士生活遗迹。' },
+      { icon: '🧱', title: '城墙遗迹', content: '现存的城墙残段长约500米，最高处约8米。城墙采用夯土外包砖石的结构，夯层清晰可见。在城墙断面可以观察到历代维修加固的痕迹，是一部凝固的建筑史。' },
+      { icon: '🎧', title: '语音导览', content: '您面前这段高约8米的夯土墙就是东汉潼关古城墙的一部分。请观察墙面上不同颜色的夯土层——每一层代表一个朝代。最下层颜色最深的是汉代原始夯土，中间浅黄色的是唐代加固层，最上层带有砖石痕迹的是明代维修层。正前方是近年复原的古城门模型。' }
+    ],
+    tips: '遗址区域地面不平，请穿着舒适的平底鞋。有免费WiFi可下载AR复原App查看古城原貌。', duration: 25
+  },
+  {
+    id: 'spot_006', name: '落日崖', subtitle: '黄河落日的最佳观赏地', category: '自然景观',
+    coverGradient: 'linear-gradient(160deg, #8a4020 0%, #c87040 40%, #f0a068 100%)',
+    galleryGradients: [
+      'linear-gradient(160deg, #9a5030 0%, #d88050 50%, #f8b078 100%)',
+      'linear-gradient(160deg, #753018 0%, #b86030 50%, #e89058 100%)'
+    ],
+    videoUrl: '', location: { lat: 34.5448, lng: 110.2501, address: '岳渎公园·落日崖' },
+    description: '落日崖是一处天然的观景岩台，伸出崖壁约15米，下方是深渊峡谷，前方是开阔的黄河河谷。每天傍晚，这里聚集着大量游客等待日落——当红日沉入黄河西岸的群山中时，整个河谷被染成金色。',
+    detail: [
+      { icon: '🌅', title: '日落奇观', content: '落日崖的海拔和朝向使其成为观赏黄河日落的完美位置。日落时分，阳光穿过河谷中的水汽，形成绚丽的丁达尔效应。整个过程持续约30分钟，天空色彩从金黄渐变到绯红再到深紫。' },
+      { icon: '🌿', title: '崖壁生态', content: '落日崖的崖壁上生长着多种耐旱植物，包括国家二级保护植物太行花和多种蕨类植物。崖壁缝隙中栖息着岩鸽和红隼等鸟类。' },
+      { icon: '📷', title: '摄影指南', content: '最佳拍摄机位在崖台左侧第三块岩石上。建议使用广角镜头（16-35mm）拍摄全景，或使用长焦镜头（70-200mm）拍摄黄河上的夕阳倒影。使用三脚架和ND滤镜可拍出丝绸般的黄河水面效果。' },
+      { icon: '🎧', title: '语音导览', content: '您现在站在落日崖的最前端。脚下是深约80米的峡谷，前方是黄河河谷。请站稳扶好栏杆，享受这壮美的黄河落日。如果运气好，您还能看到成群的候鸟在夕阳中飞过河面。' }
+    ],
+    tips: '日落时间请参考公园当日公告。崖台风大，注意保暖和手机安全。建议提前30分钟到达占位。', duration: 10
+  }
+];
+
+const categories = [
+  { key: 'all', name: '全部景点', icon: '🌄' },
+  { key: '观景台', name: '观景台', icon: '🔭' },
+  { key: '人文遗迹', name: '人文遗迹', icon: '📜' },
+  { key: '建筑', name: '建筑', icon: '🏯' },
+  { key: '历史遗迹', name: '历史遗迹', icon: '⚔️' },
+  { key: '自然景观', name: '自然景观', icon: '🏔️' }
+];
+
+// ==================== 应用状态 ====================
+let activeCategory = 'all';
+let currentSpotId = null;
+let currentPage = 'home';
+let previousPage = 'home';
+let isAudioPlaying = false;
+let audioTimer = null;
+let audioCurrent = 0;
+let galleryIndex = 0;
+let galleryTimer = null;
+
+// ==================== 工具函数 ====================
+function getSpotById(id) { return spots.find(s => s.id === id) || null; }
+
+function getRecommendedSpots(currentId, count = 1) {
+  return spots.filter(s => s.id !== currentId).sort(() => Math.random() - 0.5).slice(0, count);
+}
+
+function formatTime(seconds) {
+  if (!seconds || seconds <= 0) return '00:00';
+  const m = Math.floor(seconds / 60), s = Math.floor(seconds % 60);
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+// ==================== 页面导航 ====================
+function navigateTo(page, spotId = null) {
+  previousPage = currentPage;
+  currentPage = page;
+
+  document.querySelectorAll('.page-panel').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + page);
+  if (target) target.classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'instant' });
+  document.getElementById('backToTop').classList.remove('visible');
+
+  if (page === 'home') {
+    stopAudio();
+    currentSpotId = null;
+    renderHome();
+  } else if (page === 'detail' && spotId) {
+    currentSpotId = spotId;
+    stopAudio();
+    renderDetail(spotId);
+  } else if (page === 'video' && spotId) {
+    currentSpotId = spotId;
+    stopAudio();
+    renderVideo(spotId);
+  }
+}
+
+function goBackFromVideo() {
+  if (previousPage === 'detail' && currentSpotId) {
+    navigateTo('detail', currentSpotId);
+  } else {
+    navigateTo('home');
+  }
+}
+
+// ==================== 搜索功能 ====================
+let searchQuery = '';
+let searchTimeout = null;
+
+function onSearchInput(value) {
+  searchQuery = value.trim();
+  const clearBtn = document.getElementById('searchClear');
+  const suggestions = document.getElementById('searchSuggestions');
+
+  if (searchQuery) {
+    clearBtn.classList.add('visible');
+  } else {
+    clearBtn.classList.remove('visible');
+    suggestions.classList.remove('visible');
+    document.getElementById('searchResultsInfo').classList.remove('visible');
+    // 恢复默认列表
+    activeCategory = 'all';
+    renderCategories();
+    renderSpotList();
+    return;
+  }
+
+  // 防抖搜索建议
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => {
+    updateSuggestions(searchQuery);
+  }, 200);
+
+  // 实时过滤景点列表
+  filterSpots(searchQuery);
+}
+
+function onSearchFocus() {
+  if (searchQuery) {
+    updateSuggestions(searchQuery);
+  }
+}
+
+function onSearchBlur() {
+  // 延迟隐藏，让点击建议项能触发
+  setTimeout(() => {
+    document.getElementById('searchSuggestions').classList.remove('visible');
+  }, 200);
+}
+
+function clearSearch() {
+  searchQuery = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  document.getElementById('searchSuggestions').classList.remove('visible');
+  document.getElementById('searchResultsInfo').classList.remove('visible');
+  activeCategory = 'all';
+  renderCategories();
+  renderSpotList();
+  document.getElementById('sectionTitle').textContent = '🗺️ 全部景点';
+}
+
+function updateSuggestions(query) {
+  const container = document.getElementById('searchSuggestions');
+  if (!query) { container.classList.remove('visible'); return; }
+
+  // 在所有景点中搜索匹配
+  const results = spots.filter(s => {
+    const q = query.toLowerCase();
+    return s.name.toLowerCase().includes(q) ||
+           s.subtitle.toLowerCase().includes(q) ||
+           s.description.toLowerCase().includes(q) ||
+           s.category.toLowerCase().includes(q) ||
+           s.location.address.toLowerCase().includes(q) ||
+           s.detail.some(d => d.title.toLowerCase().includes(q) || d.content.toLowerCase().includes(q)) ||
+           s.tips.toLowerCase().includes(q);
+  });
+
+  if (results.length === 0) {
+    container.innerHTML = '<div class="search-suggestion-item" style="color:var(--text-hint);justify-content:center;">未找到匹配景点</div>';
+  } else {
+    container.innerHTML = results.slice(0, 6).map(s => `
+      <div class="search-suggestion-item" onmousedown="event.preventDefault();navigateTo('detail','${s.id}')">
+        <span class="suggestion-icon">📍</span>
+        <div class="suggestion-info">
+          <span class="suggestion-name">${highlightMatch(s.name, query)}</span>
+          <span class="suggestion-subtitle">${highlightMatch(s.subtitle, query)} · ${s.category}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+  container.classList.add('visible');
+}
+
+function highlightMatch(text, query) {
+  if (!query) return text;
+  const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const regex = new RegExp(`(${escaped})`, 'gi');
+  return text.replace(regex, '<span class="search-highlight">$1</span>');
+}
+
+function filterSpots(query) {
+  const q = query.toLowerCase();
+  const filtered = spots.filter(s => {
+    return s.name.toLowerCase().includes(q) ||
+           s.subtitle.toLowerCase().includes(q) ||
+           s.description.toLowerCase().includes(q) ||
+           s.category.toLowerCase().includes(q) ||
+           s.location.address.toLowerCase().includes(q) ||
+           s.detail.some(d => d.title.toLowerCase().includes(q) || d.content.toLowerCase().includes(q)) ||
+           s.tips.toLowerCase().includes(q);
+  });
+
+  // 更新分类为全部
+  activeCategory = 'all';
+  renderCategories();
+
+  // 更新标题和计数
+  document.getElementById('sectionTitle').textContent = '🔍 搜索结果';
+  document.getElementById('sectionCount').textContent = `找到 ${filtered.length} 个景点`;
+
+  // 显示搜索结果信息
+  const infoEl = document.getElementById('searchResultsInfo');
+  infoEl.textContent = `搜索"${query}" — 找到 ${filtered.length} 个相关景点`;
+  infoEl.classList.add('visible');
+
+  // 渲染过滤后的列表
+  const container = document.getElementById('spotList');
+  const empty = document.getElementById('emptyState');
+
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'flex';
+    empty.querySelector('.empty-icon').textContent = '🔍';
+    empty.querySelector('.empty-text').textContent = '未找到匹配的景点，请尝试其他关键词';
+  } else {
+    empty.style.display = 'none';
+    container.innerHTML = filtered.map(s => {
+      const hlName = highlightMatch(s.name, query);
+      const hlSub = highlightMatch(s.subtitle, query);
+      const hlDesc = highlightMatch(s.description, query);
+      const hlAddr = highlightMatch(s.location.address, query);
+      return `
+      <div class="spot-card" onclick="navigateTo('detail', '${s.id}')">
+        <div class="card-cover" style="background: ${s.coverGradient}">
+          <span class="cover-tag">${s.category}</span>
+          <div class="cover-video-badge"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-header">
+            <span class="card-name">${hlName}</span>
+            <span class="card-duration">⏱ ${s.duration}分钟</span>
+          </div>
+          <span class="card-subtitle">${hlSub}</span>
+          <p class="card-desc">${hlDesc}</p>
+          <div class="card-footer">
+            <div class="card-location"><span>📍</span><span>${hlAddr}</span></div>
+            <div class="card-action"><span class="action-text">了解详情</span><span class="card-action-arrow">›</span></div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+}
+
+// ==================== 首页渲染 ====================
+function renderHome() {
+  clearSearchSilent();
+  renderCategories();
+  renderSpotList();
+}
+
+function renderCategories() {
+  const container = document.getElementById('categoryList');
+  container.innerHTML = categories.map(c => `
+    <div class="category-item ${c.key === activeCategory ? 'active' : ''}"
+         data-key="${c.key}" onclick="onCategoryChange('${c.key}')">
+      <span class="category-icon">${c.icon}</span>
+      <span class="category-name">${c.name}</span>
+    </div>
+  `).join('');
+}
+
+function onCategoryChange(key) {
+  // 清除搜索状态
+  clearSearchSilent();
+  activeCategory = key;
+  renderCategories();
+  renderSpotList();
+  const cat = categories.find(c => c.key === key);
+  document.getElementById('sectionTitle').textContent =
+    key === 'all' ? '🗺️ 全部景点' : '🗺️ ' + (cat ? cat.name : '');
+}
+
+function clearSearchSilent() {
+  searchQuery = '';
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  document.getElementById('searchSuggestions').classList.remove('visible');
+  document.getElementById('searchResultsInfo').classList.remove('visible');
+}
+
+function renderSpotList() {
+  const filtered = activeCategory === 'all' ? spots : spots.filter(s => s.category === activeCategory);
+  const container = document.getElementById('spotList');
+  const empty = document.getElementById('emptyState');
+  const countEl = document.getElementById('sectionCount');
+
+  countEl.textContent = `共 ${filtered.length} 个`;
+
+  if (filtered.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'flex';
+    empty.querySelector('.empty-icon').textContent = '🏕️';
+    empty.querySelector('.empty-text').textContent = '该分类下暂无景点';
+  } else {
+    empty.style.display = 'none';
+    container.innerHTML = filtered.map(s => `
+      <div class="spot-card" onclick="navigateTo('detail', '${s.id}')">
+        <div class="card-cover" style="background: ${s.coverGradient}">
+          <span class="cover-tag">${s.category}</span>
+          <div class="cover-video-badge"></div>
+        </div>
+        <div class="card-body">
+          <div class="card-header">
+            <span class="card-name">${s.name}</span>
+            <span class="card-duration">⏱ ${s.duration}分钟</span>
+          </div>
+          <span class="card-subtitle">${s.subtitle}</span>
+          <p class="card-desc">${s.description}</p>
+          <div class="card-footer">
+            <div class="card-location"><span>📍</span><span>${s.location.address}</span></div>
+            <div class="card-action"><span class="action-text">了解详情</span><span class="card-action-arrow">›</span></div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+}
+
+// ==================== 详情页渲染 ====================
+function renderDetail(spotId) {
+  const spot = getSpotById(spotId);
+  if (!spot) { navigateTo('home'); return; }
+
+  document.getElementById('detailNavTitle').textContent = spot.name;
+  document.getElementById('detailSpotName').textContent = spot.name;
+  document.getElementById('detailSpotSubtitle').textContent = spot.subtitle;
+  document.getElementById('detailSpotTag').textContent = spot.category;
+  document.getElementById('detailLocationText').textContent = spot.location.address;
+  document.getElementById('detailDesc').textContent = spot.description;
+  document.getElementById('detailTips').textContent = spot.tips;
+
+  // 图片轮播
+  renderGallery(spot);
+  startGalleryAutoPlay();
+
+  // 视频按钮
+  const videoClick = () => navigateTo('video', spotId);
+  document.getElementById('galleryVideoBtn').onclick = videoClick;
+  document.getElementById('detailVideoPlaceholder').onclick = videoClick;
+  document.getElementById('detailVideoBtn').onclick = videoClick;
+
+  // 详细讲解卡片
+  document.getElementById('detailCards').innerHTML = spot.detail.map(d => `
+    <div class="detail-card">
+      <div class="detail-card-header">
+        <span class="detail-card-icon">${d.icon}</span>
+        <span class="detail-card-title-text">${d.title}</span>
+      </div>
+      <p class="detail-card-content">${d.content}</p>
+    </div>
+  `).join('');
+
+  // 音频状态重置
+  stopAudio();
+  document.getElementById('audioBadge').textContent = '🔊 语音播放';
+  document.getElementById('audioBadge').classList.remove('playing');
+  document.getElementById('audioProgress').style.display = 'none';
+
+  // 地图点击
+  document.getElementById('detailLocationRow').onclick = () => {
+    const url = `https://uri.amap.com/marker?position=${spot.location.lng},${spot.location.lat}&name=${encodeURIComponent(spot.name)}&callnative=1`;
+    window.open(url, '_blank');
+  };
+}
+
+function renderGallery(spot) {
+  const gradients = spot.galleryGradients;
+  const track = document.getElementById('galleryTrack');
+  const dots = document.getElementById('galleryDots');
+  galleryIndex = 0;
+
+  track.innerHTML = gradients.map((g, i) => `
+    <div class="gallery-slide">
+      <div class="gallery-img" style="background:${g};width:100%;height:100%"></div>
+    </div>
+  `).join('');
+  track.style.transform = 'translateX(0)';
+
+  if (gradients.length > 1) {
+    dots.innerHTML = gradients.map((_, i) => `
+      <span class="gallery-dot ${i === 0 ? 'active' : ''}" onclick="goToGallerySlide(${i})"></span>
+    `).join('');
+    dots.style.display = 'flex';
+
+    // 触摸滑动支持
+    let startX = 0, startTransform = 0;
+    track.onpointerdown = e => {
+      startX = e.clientX;
+      startTransform = galleryIndex * -100;
+      track.setPointerCapture(e.pointerId);
+    };
+    track.onpointermove = e => {
+      if (!track.hasPointerCapture(e.pointerId)) return;
+      const dx = e.clientX - startX;
+      const pct = startTransform + (dx / track.offsetWidth) * 100;
+      track.style.transition = 'none';
+      track.style.transform = `translateX(${Math.max(-(gradients.length-1)*100, Math.min(0, pct))}%)`;
+    };
+    track.onpointerup = e => {
+      track.releasePointerCapture(e.pointerId);
+      track.style.transition = 'transform 0.5s ease';
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 40) {
+        galleryIndex = dx > 0 ? Math.max(0, galleryIndex - 1) : Math.min(gradients.length - 1, galleryIndex + 1);
+      }
+      updateGallery();
+    };
+  } else {
+    dots.innerHTML = '';
+    dots.style.display = 'none';
+  }
+}
+
+function goToGallerySlide(i) {
+  galleryIndex = i;
+  stopGalleryAutoPlay();
+  updateGallery();
+  startGalleryAutoPlay();
+}
+
+function updateGallery() {
+  document.getElementById('galleryTrack').style.transform = `translateX(-${galleryIndex * 100}%)`;
+  document.querySelectorAll('#galleryDots .gallery-dot').forEach((d, i) => {
+    d.classList.toggle('active', i === galleryIndex);
+  });
+}
+
+function startGalleryAutoPlay() {
+  stopGalleryAutoPlay();
+  const spot = getSpotById(currentSpotId);
+  if (spot && spot.galleryGradients.length > 1) {
+    galleryTimer = setInterval(() => {
+      galleryIndex = (galleryIndex + 1) % spot.galleryGradients.length;
+      updateGallery();
+    }, 4000);
+  }
+}
+
+function stopGalleryAutoPlay() {
+  if (galleryTimer) { clearInterval(galleryTimer); galleryTimer = null; }
+}
+
+// ==================== 视频页渲染 ====================
+function renderVideo(spotId) {
+  const spot = getSpotById(spotId);
+  if (!spot) { navigateTo('home'); return; }
+
+  document.getElementById('videoNavTitle').textContent = spot.name;
+  document.getElementById('viSpotName').textContent = spot.name;
+  document.getElementById('viSpotSubtitle').textContent = spot.subtitle;
+  document.getElementById('viDuration').textContent = formatTime(spot.duration * 60);
+  document.getElementById('viDescLabel').textContent = `📍 ${spot.category} · 视频讲解`;
+  document.getElementById('viDescText').textContent = spot.description;
+
+  document.getElementById('videoToDetailBtn').onclick = () => navigateTo('detail', spotId);
+
+  const next = getRecommendedSpots(spotId, 1);
+  const nextBtn = document.getElementById('videoNextBtn');
+  if (next.length > 0) {
+    nextBtn.style.display = 'flex';
+    nextBtn.textContent = `▶️ 下一个景点: ${next[0].name}`;
+    nextBtn.onclick = () => navigateTo('video', next[0].id);
+  } else {
+    nextBtn.style.display = 'none';
+  }
+
+  // 视频播放器点击模拟
+  document.getElementById('videoPlayerArea').onclick = function() {
+    this.querySelector('.big-play').style.animation = 'pulse 0.3s ease';
+    setTimeout(() => { this.querySelector('.big-play').style.animation = ''; }, 300);
+    const fill = document.getElementById('viProgressFill');
+    let w = 0;
+    const simPlay = setInterval(() => {
+      w += 0.5;
+      if (w >= 100) { clearInterval(simPlay); }
+      fill.style.width = w + '%';
+    }, 100);
+  };
+}
+
+// ==================== 音频模拟 ====================
+function toggleAudio() {
+  if (isAudioPlaying) { stopAudio(); } else { playAudio(); }
+}
+
+function playAudio() {
+  const spot = getSpotById(currentSpotId);
+  if (!spot) return;
+
+  isAudioPlaying = true;
+  document.getElementById('audioBadge').textContent = '⏸️ 暂停语音';
+  document.getElementById('audioBadge').classList.add('playing');
+  document.getElementById('audioProgress').style.display = 'block';
+
+  const durationMin = spot.duration || 10;
+  audioTimer = setInterval(() => {
+    audioCurrent += 0.02;
+    if (audioCurrent >= durationMin) { stopAudio(); return; }
+    const pct = Math.round((audioCurrent / durationMin) * 100);
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('progressText').textContent =
+      `语音讲解中... ${audioCurrent.toFixed(1)}/${durationMin}分钟`;
+  }, 200);
+}
+
+function stopAudio() {
+  isAudioPlaying = false;
+  audioCurrent = 0;
+  if (audioTimer) { clearInterval(audioTimer); audioTimer = null; }
+  document.getElementById('audioBadge').textContent = '🔊 语音播放';
+  document.getElementById('audioBadge').classList.remove('playing');
+  const ap = document.getElementById('audioProgress');
+  if (ap) ap.style.display = 'none';
+  const pf = document.getElementById('progressFill');
+  if (pf) pf.style.width = '0%';
+}
+
+// ==================== 全局事件 ====================
+function scrollToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 导航栏滚动效果
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('homeNav');
+  if (nav) { nav.classList.toggle('scrolled', window.scrollY > 100); }
+  const btn = document.getElementById('backToTop');
+  if (btn) { btn.classList.toggle('visible', window.scrollY > 500); }
+});
+
+// 扫码提示
+document.getElementById('scanTip').addEventListener('click', function() {
+  this.style.display = 'none';
+});
+
+// ==================== 初始化 ====================
+function init() {
+  renderHome();
+
+  // 检查 URL 参数（模拟扫码进入）
+  const params = new URLSearchParams(window.location.search);
+  const spotId = params.get('spotId');
+  if (spotId && getSpotById(spotId)) {
+    document.getElementById('scanMarker').style.display = 'flex';
+    setTimeout(() => navigateTo('video', spotId), 800);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+
+</body>
+</html>
