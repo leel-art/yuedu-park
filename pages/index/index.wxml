@@ -1,0 +1,139 @@
+<!-- pages/index/index.wxml —— 岳渎公园首页 -->
+<view class="page-index">
+
+  <!-- ===== 自定义导航栏 ===== -->
+  <view class="nav-bar" style="padding-top: {{statusBarHeight}}px;">
+    <view class="nav-content">
+      <view class="nav-title">🏞️ 岳渎公园</view>
+      <view class="nav-subtitle">山河交汇 · 千年潼关</view>
+    </view>
+  </view>
+
+  <!-- ===== 顶部 Hero 大图 ===== -->
+  <view class="hero-section">
+    <image
+      class="hero-image"
+      src="/images/hero_bg.jpg"
+      mode="aspectFill"
+      lazy-load="{{false}}"
+    />
+    <view class="hero-overlay"></view>
+    <view class="hero-content">
+      <text class="hero-title">岳渎公园</text>
+      <text class="hero-desc">国家级自然风景区 · 三河交汇之地</text>
+      <view class="hero-tags">
+        <text class="hero-tag">🌊 黄河风光</text>
+        <text class="hero-tag">🏔️ 华山远眺</text>
+        <text class="hero-tag">📜 千年潼关</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 景区简介卡片 ===== -->
+  <view class="intro-card">
+    <view class="intro-header">
+      <text class="intro-icon">📍</text>
+      <text class="intro-title">景区简介</text>
+    </view>
+    <text class="intro-text">
+      岳渎公园位于陕西省潼关县，地处秦岭北麓、黄河西岸，因"岳"（西岳华山）与"渎"（大河黄河）在此交汇而得名。公园集自然风光、历史遗迹、生态湿地于一体，是领略黄河文明、感受山河壮美的绝佳目的地。
+    </text>
+    <view class="intro-stats">
+      <view class="stat-item">
+        <text class="stat-value">{{spots.length}}</text>
+        <text class="stat-label">景点</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">12km²</text>
+        <text class="stat-label">占地面积</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">AAAA</text>
+        <text class="stat-label">景区级别</text>
+      </view>
+      <view class="stat-item">
+        <text class="stat-value">2k+</text>
+        <text class="stat-label">年历史</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 天气卡片 ===== -->
+  <view class="weather-card" wx:if="{{weather}}">
+    <view class="weather-header">
+      <text class="weather-title">🌤️ 今日天气</text>
+      <text class="weather-location">📍 岳渎公园 · 潼关</text>
+    </view>
+    <view class="weather-main">
+      <text class="weather-icon">{{weather.weatherIcon}}</text>
+      <text class="weather-temp">{{weather.temperature}}°C</text>
+      <view class="weather-info">
+        <text>{{weather.weatherDesc}}</text>
+        <text>💧 湿度 {{weather.humidity}}%</text>
+        <text>💨 风速 {{weather.windSpeed}}km/h</text>
+      </view>
+    </view>
+    <view class="weather-forecast" wx:if="{{weather.forecast}}">
+      <view class="fc-item" wx:for="{{weather.forecast}}" wx:key="date">
+        <text class="fc-day">{{item.date}}</text>
+        <text class="fc-icon">{{item.icon}}</text>
+        <text class="fc-temp">{{item.tempMax}}°/{{item.tempMin}}°</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 分类筛选 ===== -->
+  <view class="category-section">
+    <scroll-view class="category-scroll" scroll-x="{{true}}" enhanced="{{true}}" show-scrollbar="{{false}}">
+      <view class="category-list">
+        <view
+          wx:for="{{categories}}"
+          wx:key="key"
+          class="category-item {{activeCategory === item.key ? 'active' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="onCategoryChange"
+        >
+          <text class="category-icon">{{item.icon}}</text>
+          <text class="category-name">{{item.name}}</text>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- ===== 景点列表 ===== -->
+  <view class="spot-section">
+    <view class="section-header">
+      <text class="section-title">🗺️ {{activeCategory === 'all' ? '全部景点' : categoryName}}</text>
+      <text class="section-count">共 {{filteredSpots.length}} 个</text>
+    </view>
+
+    <!-- 景点卡片列表 -->
+    <view class="spot-list">
+      <spot-card
+        wx:for="{{filteredSpots}}"
+        wx:key="id"
+        spot="{{item}}"
+        bindtap="onSpotTap"
+        data-spotid="{{item.id}}"
+      />
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:if="{{filteredSpots.length === 0}}">
+      <text class="empty-icon">🏕️</text>
+      <text class="empty-text">该分类下暂无景点</text>
+    </view>
+  </view>
+
+  <!-- ===== 底部安全区 ===== -->
+  <view class="bottom-safe"></view>
+
+  <!-- ===== 扫码提示浮窗（首次使用） ===== -->
+  <view class="scan-tip" wx:if="{{showScanTip}}" bindtap="dismissScanTip">
+    <view class="scan-tip-content">
+      <text class="scan-tip-icon">📱</text>
+      <text class="scan-tip-text">在各景点扫描二维码\n即可观看视频讲解</text>
+      <text class="scan-tip-close">点击关闭</text>
+    </view>
+  </view>
+</view>

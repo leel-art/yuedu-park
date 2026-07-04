@@ -1,0 +1,43 @@
+<!-- components/spot-card/spot-card.wxml —— 景点卡片组件 -->
+<view class="spot-card" hover-class="spot-card-hover">
+  <!-- 封面图 -->
+  <view class="card-cover">
+    <image
+      class="cover-image"
+      src="{{spot.coverImage}}"
+      mode="aspectFill"
+      lazy-load="{{true}}"
+    />
+    <!-- 分类标签 -->
+    <view class="cover-tag">{{spot.category}}</view>
+    <!-- 视频图标 -->
+    <view class="cover-video-badge">
+      <text class="video-icon">▶</text>
+    </view>
+  </view>
+
+  <!-- 信息区 -->
+  <view class="card-body">
+    <view class="card-header">
+      <text class="card-name">{{spot.name}}</text>
+      <view class="card-duration" wx:if="{{spot.duration}}">
+        <text class="duration-icon">⏱</text>
+        <text class="duration-text">{{spot.duration}}分钟</text>
+      </view>
+    </view>
+    <text class="card-subtitle">{{spot.subtitle}}</text>
+    <text class="card-desc">{{spot.description}}</text>
+
+    <!-- 底部标签和操作 -->
+    <view class="card-footer">
+      <view class="card-location">
+        <text class="loc-icon">📍</text>
+        <text class="loc-text">{{spot.location.address}}</text>
+      </view>
+      <view class="card-action">
+        <text class="action-text">了解详情</text>
+        <text class="action-arrow">›</text>
+      </view>
+    </view>
+  </view>
+</view>

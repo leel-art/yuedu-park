@@ -1,13 +1,12 @@
-# 微信小程序源文件（已转为网页，不需要部署）
-app.*
-project.config.json
-sitemap.json
-pages/
-components/
-utils/
-data/
+# 后端
+server/node_modules/
+server/yuedu.db
+server/.env
+
+# 微信小程序
+miniprogram_npm/
 
 # 系统文件
-.DS_Store
 Thumbs.db
+.DS_Store
 node_modules/

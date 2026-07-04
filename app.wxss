@@ -1,0 +1,112 @@
+/* app.wxss —— 全局样式 */
+page {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
+  font-size: 28rpx;
+  color: #333;
+  background-color: #f5f5f5;
+  line-height: 1.6;
+}
+
+/* ===== 全局 CSS 变量 / 主题色 ===== */
+/* 自然风光主题: 森林绿 + 天空蓝 */
+page {
+  --primary: #2E7D32;
+  --primary-light: #4CAF50;
+  --primary-dark: #1B5E20;
+  --accent: #FF9800;
+  --accent-light: #FFB74D;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+  --text-hint: #BDBDBD;
+  --bg-white: #FFFFFF;
+  --bg-light: #F5F5F5;
+  --bg-card: #FFFFFF;
+  --divider: #E0E0E0;
+  --shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
+  --shadow-hover: 0 8rpx 32rpx rgba(0,0,0,0.12);
+  --radius: 16rpx;
+  --radius-lg: 24rpx;
+}
+
+/* ===== 通用工具类 ===== */
+.container {
+  padding: 24rpx;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 通用按钮 */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 48rpx;
+  padding: 20rpx 48rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.btn-primary:active {
+  background: var(--primary-dark);
+  transform: scale(0.97);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--primary);
+  border: 2rpx solid var(--primary);
+  border-radius: 48rpx;
+  padding: 18rpx 48rpx;
+  font-size: 30rpx;
+}
+
+/* 通用文字层级 */
+.section-title {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 24rpx;
+}
+
+.section-subtitle {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  margin-bottom: 32rpx;
+}
+
+/* 通用标签 */
+.tag {
+  display: inline-block;
+  padding: 6rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--primary);
+}
+
+.tag-accent {
+  background: rgba(255, 152, 0, 0.1);
+  color: var(--accent);
+}

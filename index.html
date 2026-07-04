@@ -520,6 +520,56 @@ body{
 .back-to-top.visible{display:flex}
 .back-to-top:hover{background:var(--emerald-light);transform:translateY(-2px)}
 
+/* ===== Weather Card ===== */
+.weather-section{padding:0 20px;margin:0 0 18px}
+.weather-card{
+  background:linear-gradient(135deg,#E8F5E9,#F1F8E9);border-radius:var(--radius-xl);
+  padding:20px 22px;border:1px solid var(--border-light);box-shadow:var(--shadow-sm);
+}
+.weather-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.weather-title{font-family:var(--serif);font-size:.95rem;font-weight:700;color:var(--emerald)}
+.weather-location{font-size:.7rem;color:var(--ink-muted)}
+.weather-loading{text-align:center;color:var(--ink-muted);font-size:.82rem;padding:10px 0}
+.weather-body{display:flex;align-items:center;gap:14px}
+.weather-main{display:flex;align-items:center;gap:8px}
+.weather-icon-main{font-size:2.2rem;line-height:1}
+.weather-temp{font-family:var(--serif);font-size:2rem;font-weight:700;color:var(--emerald);line-height:1}
+.weather-detail{flex:1;font-size:.7rem;color:var(--ink-light);display:flex;flex-direction:column;gap:2px}
+.weather-detail span{display:block}
+.weather-forecast{display:flex;gap:14px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(0,0,0,.06)}
+.weather-fc-item{flex:1;text-align:center}
+.weather-fc-day{font-size:.7rem;color:var(--ink-muted);margin-bottom:4px}
+.weather-fc-icon{font-size:1.3rem;display:block;margin-bottom:2px}
+.weather-fc-temp{font-size:.75rem;color:var(--ink-light);font-weight:500}
+
+/* ===== Messages ===== */
+.messages-section{margin:0 20px 16px;background:var(--white);border-radius:var(--radius-xl);padding:28px 24px;box-shadow:var(--shadow);border:1px solid var(--border-light)}
+.messages-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.messages-title{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--ink)}
+.messages-count{font-size:.72rem;color:var(--ink-muted)}
+.message-form{background:var(--bg-warm);border-radius:var(--radius);padding:16px;margin-bottom:20px}
+.form-row{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+.form-input{flex:1;padding:8px 14px;border:1px solid var(--border);border-radius:20px;font-size:.78rem;outline:none;background:var(--white);transition:border-color .2s;min-width:0}
+.form-input:focus{border-color:var(--gold)}
+.form-rating{display:flex;gap:2px;flex-shrink:0}
+.form-rating .star{cursor:pointer;font-size:1.2rem;color:#ddd;transition:color .15s;user-select:none}
+.form-rating .star.active{color:var(--gold)}
+.form-textarea{width:100%;height:80px;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:.78rem;outline:none;resize:vertical;background:var(--white);box-sizing:border-box;font-family:var(--sans);transition:border-color .2s}
+.form-textarea:focus{border-color:var(--gold)}
+.form-footer{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.form-hint{font-size:.68rem;color:var(--ink-muted)}
+.form-submit{padding:8px 22px;background:var(--emerald);color:#fff;border:none;border-radius:20px;font-size:.78rem;cursor:pointer;transition:all .2s;font-family:var(--sans)}
+.form-submit:hover{background:var(--emerald-light);box-shadow:0 2px 10px rgba(26,60,52,.25)}
+.form-submit:disabled{opacity:.5;cursor:not-allowed}
+.message-list{display:flex;flex-direction:column;gap:14px}
+.message-empty{text-align:center;color:var(--ink-muted);font-size:.78rem;padding:20px 0}
+.message-item{background:var(--bg-light);border-radius:var(--radius);padding:16px 18px}
+.msg-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.msg-nickname{font-weight:600;font-size:.82rem;color:var(--ink);display:flex;align-items:center;gap:6px}
+.msg-rating{color:var(--gold);font-size:.75rem}
+.msg-time{font-size:.65rem;color:var(--ink-muted)}
+.msg-content{font-size:.8rem;color:var(--ink-light);line-height:1.65}
+
 /* ===== Footer ===== */
 .bottom-safe{height:env(safe-area-inset-bottom,20px)}
 .app-footer{text-align:center;padding:32px 16px;color:var(--ink-muted);font-size:.7rem;letter-spacing:.04em}
@@ -616,6 +666,19 @@ body{
       </div>
     </div>
 
+    <!-- ====== 天气卡片 ====== -->
+    <div class="weather-section reveal">
+      <div class="weather-card" id="weatherCard">
+        <div class="weather-header">
+          <span class="weather-title">🌤️ 今日天气</span>
+          <span class="weather-location">📍 岳渎公园 · 潼关</span>
+        </div>
+        <div class="weather-body" id="weatherBody">
+          <div class="weather-loading">加载天气中...</div>
+        </div>
+      </div>
+    </div>
+
     <!-- Spot list -->
     <div class="spot-section reveal">
       <div class="section-header">
@@ -706,6 +769,38 @@ body{
       <p class="tips-text" id="detailTips"></p>
     </div>
 
+    <!-- ====== 游客留言区 ====== -->
+    <div class="messages-section">
+      <div class="messages-header">
+        <span class="messages-title">💬 游客留言</span>
+        <span class="messages-count" id="messagesCount">0 条留言</span>
+      </div>
+
+      <!-- 留言表单 -->
+      <div class="message-form">
+        <div class="form-row">
+          <input type="text" class="form-input" id="msgNickname" placeholder="你的昵称（选填）" maxlength="20">
+          <div class="form-rating" id="msgRating">
+            <span class="star" data-v="1">☆</span>
+            <span class="star" data-v="2">☆</span>
+            <span class="star active" data-v="3">☆</span>
+            <span class="star" data-v="4">☆</span>
+            <span class="star" data-v="5">☆</span>
+          </div>
+        </div>
+        <textarea class="form-textarea" id="msgContent" placeholder="分享你的游览体验，帮助景区变得更好..." maxlength="500"></textarea>
+        <div class="form-footer">
+          <span class="form-hint" id="msgCharCount">0/500</span>
+          <button class="form-submit" id="msgSubmitBtn" onclick="submitMessage()">提交留言</button>
+        </div>
+      </div>
+
+      <!-- 留言列表 -->
+      <div class="message-list" id="messageList">
+        <div class="message-empty">暂无留言，来说两句吧 ✍️</div>
+      </div>
+    </div>
+
     <div class="detail-bottom-bar">
       <button class="detail-bar-btn primary" id="detailVideoBtn">▶ 观看视频讲解</button>
       <button class="detail-bar-btn outline" onclick="navigateTo('home')">返回首页</button>
@@ -781,8 +876,8 @@ function navigateTo(page,spotId=null){
   const t=document.getElementById('page-'+page);if(t)t.classList.add('active');
   window.scrollTo({top:0,behavior:'instant'});
   document.getElementById('backToTop').classList.remove('visible');
-  if(page==='home'){stopAudio();currentSpotId=null;renderHome();observeReveal()}
-  else if(page==='detail'&&spotId){currentSpotId=spotId;stopAudio();renderDetail(spotId)}
+  if(page==='home'){stopAudio();currentSpotId=null;renderHome();observeReveal();fetchWeather()}
+  else if(page==='detail'&&spotId){currentSpotId=spotId;stopAudio();renderDetail(spotId);loadMessages(spotId)}
   else if(page==='video'&&spotId){currentSpotId=spotId;stopAudio();renderVideo(spotId)}
 }
 function goBackFromVideo(){if(previousPage==='detail'&&currentSpotId)navigateTo('detail',currentSpotId);else navigateTo('home')}
@@ -908,9 +1003,183 @@ window.addEventListener('scroll',()=>{
 });
 document.getElementById('scanTip').addEventListener('click',function(){this.style.display='none'});
 
+// ==================== API 配置 ====================
+// API 地址自动识别：本地开发 / 生产部署
+const API_BASE = window.location.hostname === 'localhost'
+  ? 'http://localhost:3000/api'
+  : window.location.origin + '/api'
+
+// ==================== 天气 ====================
+let msgRatingValue = 5;
+
+async function fetchWeather(){
+  const body = document.getElementById('weatherBody');
+  try {
+    const res = await fetch(`${API_BASE}/weather`);
+    const json = await res.json();
+    if (!json.success) throw new Error(json.error);
+    const w = json.data;
+    const f = w.forecast;
+    body.innerHTML = `
+      <div class="weather-body">
+        <div class="weather-main">
+          <span class="weather-icon-main">${w.current.weatherIcon}</span>
+          <span class="weather-temp">${w.current.temperature}°</span>
+        </div>
+        <div class="weather-detail">
+          <span>${w.current.weatherDesc}</span>
+          <span>💧 湿度 ${w.current.humidity}%</span>
+          <span>💨 ${w.current.windDirection}风 ${w.current.windSpeed}km/h</span>
+        </div>
+      </div>
+      <div class="weather-forecast">
+        ${f.map(d=>`
+          <div class="weather-fc-item">
+            <span class="weather-fc-day">${d.date.slice(5)}</span>
+            <span class="weather-fc-icon">${d.icon}</span>
+            <span class="weather-fc-temp">${d.tempMax}° / ${d.tempMin}°</span>
+          </div>
+        `).join('')}
+      </div>`;
+  } catch(err) {
+    console.warn('[天气] 获取失败，显示本地模拟数据:', err.message);
+    // 降级：显示模拟天气
+    body.innerHTML = `
+      <div class="weather-body">
+        <div class="weather-main">
+          <span class="weather-icon-main">🌤️</span>
+          <span class="weather-temp">28°</span>
+        </div>
+        <div class="weather-detail">
+          <span>大部晴朗</span>
+          <span>💧 湿度 55%</span>
+          <span>💨 东南风 12km/h</span>
+        </div>
+      </div>
+      <div class="weather-forecast">
+        <div class="weather-fc-item"><span class="weather-fc-day">今天</span><span class="weather-fc-icon">🌤️</span><span class="weather-fc-temp">30° / 22°</span></div>
+        <div class="weather-fc-item"><span class="weather-fc-day">明天</span><span class="weather-fc-icon">⛅</span><span class="weather-fc-temp">28° / 20°</span></div>
+        <div class="weather-fc-item"><span class="weather-fc-day">后天</span><span class="weather-fc-icon">🌧️</span><span class="weather-fc-temp">25° / 18°</span></div>
+      </div>`;
+  }
+}
+
+// ==================== 留言 ====================
+function setupRating(){
+  document.querySelectorAll('#msgRating .star').forEach(s=>{
+    s.addEventListener('click',function(){
+      msgRatingValue = parseInt(this.dataset.v);
+      document.querySelectorAll('#msgRating .star').forEach((st,i)=>{
+        st.textContent = i < msgRatingValue ? '★' : '☆';
+        st.classList.toggle('active', i < msgRatingValue);
+      });
+    });
+  });
+  document.getElementById('msgContent').addEventListener('input',function(){
+    document.getElementById('msgCharCount').textContent = this.value.length + '/500';
+  });
+}
+
+async function submitMessage(){
+  const btn = document.getElementById('msgSubmitBtn');
+  const nickname = document.getElementById('msgNickname').value.trim() || '游客';
+  const content = document.getElementById('msgContent').value.trim();
+
+  if(!content){ alert('请输入留言内容'); return; }
+  if(content.length > 500){ alert('留言不能超过500字'); return; }
+
+  btn.disabled = true; btn.textContent = '提交中...';
+
+  try {
+    const res = await fetch(`${API_BASE}/messages`, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        spotId: currentSpotId,
+        spotName: currentSpotId ? getSpotById(currentSpotId)?.name || '' : '',
+        nickname, content, rating: msgRatingValue
+      })
+    });
+    const json = await res.json();
+    if(json.success){
+      document.getElementById('msgContent').value = '';
+      document.getElementById('msgCharCount').textContent = '0/500';
+      loadMessages(currentSpotId);
+    } else {
+      alert('留言失败: ' + (json.error || '未知错误'));
+    }
+  } catch(err) {
+    // 降级：本地存储
+    saveMessageLocal(nickname, content);
+  }
+  btn.disabled = false; btn.textContent = '提交留言';
+}
+
+// 本地留言降级（后端不可用时）
+function saveMessageLocal(nickname, content){
+  const msgs = JSON.parse(localStorage.getItem('yuedu_messages') || '[]');
+  msgs.unshift({
+    id: Date.now(), spotId: currentSpotId, nickname, content,
+    rating: msgRatingValue, createdAt: new Date().toLocaleString('zh-CN')
+  });
+  localStorage.setItem('yuedu_messages', JSON.stringify(msgs.slice(0, 100)));
+  document.getElementById('msgContent').value = '';
+  document.getElementById('msgCharCount').textContent = '0/500';
+  loadMessages(currentSpotId);
+}
+
+async function loadMessages(spotId){
+  const list = document.getElementById('messageList');
+  const count = document.getElementById('messagesCount');
+  try {
+    const url = spotId ? `${API_BASE}/messages?spotId=${spotId}` : `${API_BASE}/messages`;
+    const res = await fetch(url);
+    const json = await res.json();
+    if(json.success){
+      count.textContent = `${json.total} 条留言`;
+      if(json.data.length === 0){
+        list.innerHTML = '<div class="message-empty">暂无留言，来说两句吧 ✍️</div>';
+      } else {
+        list.innerHTML = json.data.map(m=>`
+          <div class="message-item">
+            <div class="msg-item-header">
+              <span class="msg-nickname">👤 ${escHtml(m.nickname)} <span class="msg-rating">${'★'.repeat(m.rating)}${'☆'.repeat(5-m.rating)}</span></span>
+              <span class="msg-time">${m.createdAt}</span>
+            </div>
+            <div class="msg-content">${escHtml(m.content)}</div>
+          </div>
+        `).join('');
+      }
+      return;
+    }
+  } catch(e){ /* 降级到本地 */ }
+
+  // 降级：本地存储
+  const msgs = JSON.parse(localStorage.getItem('yuedu_messages') || '[]');
+  const filtered = spotId ? msgs.filter(m=>m.spotId===spotId) : msgs;
+  count.textContent = `${filtered.length} 条留言（本地）`;
+  if(filtered.length === 0){
+    list.innerHTML = '<div class="message-empty">暂无留言，来说两句吧 ✍️</div>';
+  } else {
+    list.innerHTML = filtered.map(m=>`
+      <div class="message-item">
+        <div class="msg-item-header">
+          <span class="msg-nickname">👤 ${escHtml(m.nickname)} <span class="msg-rating">${'★'.repeat(m.rating)}${'☆'.repeat(5-m.rating)}</span></span>
+          <span class="msg-time">${m.createdAt}</span>
+        </div>
+        <div class="msg-content">${escHtml(m.content)}</div>
+      </div>
+    `).join('');
+  }
+}
+
+function escHtml(s){ const d=document.createElement('div'); d.textContent=s; return d.innerHTML; }
+
 // ==================== INIT ====================
 function init(){
   renderHome();
+  fetchWeather();
+  setupRating();
   const params=new URLSearchParams(window.location.search),spotId=params.get('spotId');
   if(spotId&&getSpotById(spotId)){document.getElementById('scanMarker').style.display='flex';setTimeout(()=>navigateTo('video',spotId),800)}
 }

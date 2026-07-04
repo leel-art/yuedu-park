@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "岳渎公园",
+  "navigationStyle": "custom",
+  "usingComponents": {
+    "spot-card": "/components/spot-card/spot-card"
+  }
+}

@@ -1,0 +1,187 @@
+<!-- pages/spot/spot.wxml —— 景点讲解页 -->
+<view class="page-spot" wx:if="{{spot}}">
+
+  <!-- ===== 顶部图片轮播 ===== -->
+  <view class="gallery-section">
+    <swiper
+      class="gallery-swiper"
+      indicator-dots="{{true}}"
+      indicator-color="rgba(255,255,255,0.4)"
+      indicator-active-color="#fff"
+      autoplay="{{true}}"
+      interval="{{4000}}"
+      circular="{{true}}"
+    >
+      <swiper-item wx:for="{{spot.gallery}}" wx:key="*this">
+        <image class="gallery-image" src="{{item}}" mode="aspectFill" />
+      </swiper-item>
+    </swiper>
+
+    <!-- 快捷操作：看视频 -->
+    <view class="gallery-actions">
+      <view class="action-btn video-btn" bindtap="goToVideo">
+        <text class="action-icon">▶️</text>
+        <text>观看视频讲解</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- ===== 景点基本信息 ===== -->
+  <view class="spot-info">
+    <view class="info-header">
+      <view class="info-left">
+        <text class="spot-name">{{spot.name}}</text>
+        <text class="spot-subtitle">{{spot.subtitle}}</text>
+      </view>
+      <view class="info-right">
+        <text class="spot-tag">{{spot.category}}</text>
+      </view>
+    </view>
+
+    <!-- 位置信息 -->
+    <view class="location-row" bindtap="openLocation">
+      <text class="location-icon">📍</text>
+      <text class="location-text">{{spot.location.address}}</text>
+      <text class="location-nav">导航 ›</text>
+    </view>
+
+    <!-- 简介 -->
+    <view class="desc-section">
+      <text class="desc-label">景点简介</text>
+      <text class="desc-text">{{spot.description}}</text>
+    </view>
+  </view>
+
+  <!-- ============================================ -->
+  <!-- 📹 景点介绍视频（嵌入式播放）                -->
+  <!-- 替换 videoUrl 为你的实际视频地址即可         -->
+  <!-- ============================================ -->
+  <view class="video-inline-section">
+    <view class="video-inline-header">
+      <text class="video-inline-title">🎬 景点视频介绍</text>
+      <text class="video-inline-badge">推荐观看</text>
+    </view>
+    <video
+      class="video-inline-player"
+      src="{{spot.videoUrl}}"
+      poster="{{spot.videoPoster}}"
+      object-fit="contain"
+      controls="{{true}}"
+      show-center-play-btn="{{true}}"
+      show-play-btn="{{true}}"
+      enable-auto-rotation="{{true}}"
+      show-screen-lock-button="{{true}}"
+      bindplay="onVideoPlay"
+      bindended="onVideoEnded"
+    >
+      <!-- 视频未加载时的占位 -->
+      <cover-view class="video-placeholder" slot="poster">
+        <cover-image class="video-poster-img" src="{{spot.videoPoster}}" />
+        <cover-view class="video-play-overlay">
+          <cover-view class="play-circle">▶</cover-view>
+          <cover-view class="play-text">点击播放视频讲解</cover-view>
+        </cover-view>
+      </cover-view>
+    </video>
+  </view>
+
+  <!-- ===== 讲解内容（分段展示） ===== -->
+  <view class="detail-section">
+    <view class="detail-header">
+      <text class="detail-title">📖 详细讲解</text>
+      <view class="audio-badge" bindtap="toggleAudio" wx:if="{{!isAudioPlaying}}">
+        <text>🔊 语音播放</text>
+      </view>
+      <view class="audio-badge playing" bindtap="toggleAudio" wx:else>
+        <text>⏸️ 暂停语音</text>
+      </view>
+    </view>
+
+    <!-- 语音进度条 -->
+    <view class="audio-progress" wx:if="{{isAudioPlaying}}">
+      <view class="progress-bar">
+        <view class="progress-fill" style="width: {{audioProgress}}%"></view>
+      </view>
+      <text class="progress-text">语音讲解中... {{audioCurrent}}/{{spot.duration}}分钟</text>
+    </view>
+
+    <!-- 讲解内容卡片 -->
+    <view
+      class="detail-card"
+      wx:for="{{spot.detail}}"
+      wx:key="title"
+      wx:for-item="section"
+    >
+      <view class="detail-card-header">
+        <text class="detail-card-icon">{{section.title.charAt(0)}}</text>
+        <text class="detail-card-title">{{section.title}}</text>
+      </view>
+      <text class="detail-card-content">{{section.content}}</text>
+    </view>
+  </view>
+
+  <!-- ===== 小贴士 ===== -->
+  <view class="tips-section">
+    <view class="tips-header">
+      <text class="tips-icon">💡</text>
+      <text class="tips-title">游览贴士</text>
+    </view>
+    <text class="tips-text">{{spot.tips}}</text>
+  </view>
+
+  <!-- ===== 游客留言 ===== -->
+  <view class="messages-section">
+    <view class="messages-header">
+      <text class="messages-title">💬 游客留言</text>
+      <text class="messages-count">{{messages.length}} 条留言</text>
+    </view>
+    <view class="message-form">
+      <view class="form-row">
+        <input class="form-input" placeholder="你的昵称（选填）" value="{{msgNickname}}" bindinput="onNicknameInput" maxlength="20" />
+        <view class="form-rating">
+          <text class="star {{msgRating >= 1 ? 'active' : ''}}" data-v="1" bindtap="onRateTap">★</text>
+          <text class="star {{msgRating >= 2 ? 'active' : ''}}" data-v="2" bindtap="onRateTap">★</text>
+          <text class="star {{msgRating >= 3 ? 'active' : ''}}" data-v="3" bindtap="onRateTap">★</text>
+          <text class="star {{msgRating >= 4 ? 'active' : ''}}" data-v="4" bindtap="onRateTap">★</text>
+          <text class="star {{msgRating >= 5 ? 'active' : ''}}" data-v="5" bindtap="onRateTap">★</text>
+        </view>
+      </view>
+      <textarea class="form-textarea" placeholder="分享你的游览体验..." value="{{msgContent}}" bindinput="onMsgInput" maxlength="500" />
+      <view class="form-footer">
+        <text class="form-hint">{{msgContent.length}}/500</text>
+        <button class="form-submit" bindtap="submitMessage">提交留言</button>
+      </view>
+    </view>
+    <view class="message-list" wx:if="{{messages.length > 0}}">
+      <view class="message-item" wx:for="{{messages}}" wx:key="_id">
+        <view class="msg-header">
+          <text class="msg-nickname">👤 {{item.nickname}}</text>
+          <text class="msg-rating">{{'★'.repeat(item.rating)}}</text>
+          <text class="msg-time">{{item.createdAt}}</text>
+        </view>
+        <text class="msg-body">{{item.content}}</text>
+      </view>
+    </view>
+    <view class="message-empty" wx:else>
+      <text>暂无留言，来说两句吧 ✍️</text>
+    </view>
+  </view>
+
+  <!-- ===== 底部操作 ===== -->
+  <view class="bottom-bar">
+    <button class="bar-btn primary" bindtap="goToVideo">
+      <text>▶️</text> 观看视频讲解
+    </button>
+    <button class="bar-btn outline" bindtap="returnHome">
+      <text>🏠</text> 返回首页
+    </button>
+  </view>
+
+  <view class="bottom-safe"></view>
+</view>
+
+<!-- 加载中 / 景点不存在 -->
+<view class="not-found" wx:if="{{!spot}}">
+  <text class="nf-icon">🗺️</text>
+  <text class="nf-text">景点信息加载中...</text>
+</view>

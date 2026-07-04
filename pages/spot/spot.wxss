@@ -1,0 +1,575 @@
+/* pages/spot/spot.wxss —— 景点讲解页样式 */
+
+.page-spot {
+  background: var(--bg-light);
+  min-height: 100vh;
+}
+
+/* ===== 图片轮播 ===== */
+.gallery-section {
+  position: relative;
+  width: 100%;
+  height: 480rpx;
+}
+
+.gallery-swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-image {
+  width: 100%;
+  height: 100%;
+}
+
+.gallery-actions {
+  position: absolute;
+  bottom: 24rpx;
+  right: 24rpx;
+  z-index: 10;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 28rpx;
+  border-radius: 40rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  backdrop-filter: blur(10rpx);
+}
+
+.video-btn {
+  background: rgba(0,0,0,0.55);
+  color: #fff;
+}
+
+.action-icon {
+  font-size: 28rpx;
+}
+
+/* ===== 景点基本信息 ===== */
+.spot-info {
+  margin: -32rpx 24rpx 20rpx;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32rpx;
+  box-shadow: var(--shadow);
+  position: relative;
+  z-index: 2;
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16rpx;
+}
+
+.info-left {
+  flex: 1;
+}
+
+.spot-name {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: var(--text-primary);
+  display: block;
+}
+
+.spot-subtitle {
+  font-size: 24rpx;
+  color: var(--text-secondary);
+  margin-top: 8rpx;
+  display: block;
+}
+
+.info-right {
+  flex-shrink: 0;
+}
+
+.spot-tag {
+  display: inline-block;
+  padding: 8rpx 20rpx;
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--primary);
+  border-radius: 24rpx;
+  font-size: 22rpx;
+  font-weight: 500;
+}
+
+/* 位置行 */
+.location-row {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 16rpx 0;
+  border-top: 1rpx solid var(--divider);
+  border-bottom: 1rpx solid var(--divider);
+  margin-bottom: 20rpx;
+}
+
+.location-icon {
+  font-size: 28rpx;
+}
+
+.location-text {
+  flex: 1;
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}
+
+.location-nav {
+  font-size: 24rpx;
+  color: var(--primary);
+  font-weight: 500;
+}
+
+/* 简介 */
+.desc-section {
+  margin-top: 16rpx;
+}
+
+.desc-label {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: block;
+  margin-bottom: 12rpx;
+}
+
+.desc-text {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+
+/* ===== 视频嵌入区 ===== */
+.video-inline-section {
+  margin: 0 24rpx 20rpx;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.video-inline-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 28rpx 0;
+}
+
+.video-inline-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.video-inline-badge {
+  font-size: 22rpx;
+  color: var(--accent);
+  background: rgba(255, 152, 0, 0.1);
+  padding: 6rpx 16rpx;
+  border-radius: 16rpx;
+}
+
+.video-inline-player {
+  width: 100%;
+  height: 380rpx;
+  margin-top: 16rpx;
+}
+
+/* 视频封面占位 */
+.video-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.video-poster-img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.video-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.25);
+  z-index: 10;
+}
+
+.play-circle {
+  width: 80rpx;
+  height: 80rpx;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.2);
+}
+
+.play-text {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #fff;
+  text-shadow: 0 2rpx 6rpx rgba(0,0,0,0.5);
+}
+
+/* ===== 讲解内容 ===== */
+.detail-section {
+  margin: 0 24rpx 20rpx;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32rpx;
+  box-shadow: var(--shadow);
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.detail-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.audio-badge {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 12rpx 20rpx;
+  background: rgba(76, 175, 80, 0.1);
+  color: var(--primary);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  font-weight: 500;
+  border: 2rpx solid rgba(76, 175, 80, 0.2);
+}
+
+.audio-badge.playing {
+  background: var(--primary);
+  color: #fff;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* 语音进度条 */
+.audio-progress {
+  margin-bottom: 24rpx;
+}
+
+.progress-bar {
+  height: 6rpx;
+  background: var(--divider);
+  border-radius: 3rpx;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--primary);
+  border-radius: 3rpx;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 22rpx;
+  color: var(--text-hint);
+  margin-top: 8rpx;
+  display: block;
+}
+
+/* 讲解卡片 */
+.detail-card {
+  padding: 24rpx;
+  border-radius: var(--radius);
+  background: #FAFAFA;
+  margin-bottom: 16rpx;
+}
+
+.detail-card:last-child {
+  margin-bottom: 0;
+}
+
+.detail-card-header {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  margin-bottom: 12rpx;
+}
+
+.detail-card-icon {
+  font-size: 32rpx;
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+
+.detail-card-title {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.detail-card-content {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  padding-left: 60rpx;
+}
+
+/* ===== 游客留言 ===== */
+.messages-section {
+  margin: 0 24rpx 20rpx;
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: 32rpx;
+  box-shadow: var(--shadow);
+}
+.messages-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+.messages-title {
+  font-size: 30rpx;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+.messages-count {
+  font-size: 24rpx;
+  color: var(--text-hint);
+}
+.message-form {
+  background: #FAFAFA;
+  border-radius: var(--radius);
+  padding: 20rpx;
+  margin-bottom: 24rpx;
+}
+.form-row {
+  display: flex;
+  gap: 12rpx;
+  align-items: center;
+  margin-bottom: 12rpx;
+}
+.form-input {
+  flex: 1;
+  padding: 12rpx 20rpx;
+  border: 1rpx solid var(--divider);
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  background: #fff;
+}
+.form-rating {
+  display: flex;
+  gap: 4rpx;
+}
+.form-rating .star {
+  font-size: 36rpx;
+  color: #ddd;
+}
+.form-rating .star.active {
+  color: #FF9800;
+}
+.form-textarea {
+  width: 100%;
+  height: 120rpx;
+  padding: 16rpx 20rpx;
+  border: 1rpx solid var(--divider);
+  border-radius: var(--radius);
+  font-size: 24rpx;
+  background: #fff;
+  box-sizing: border-box;
+}
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12rpx;
+}
+.form-hint {
+  font-size: 22rpx;
+  color: var(--text-hint);
+}
+.form-submit {
+  padding: 12rpx 32rpx;
+  background: var(--primary);
+  color: #fff;
+  border-radius: 32rpx;
+  font-size: 24rpx;
+  border: none;
+}
+.message-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+.message-item {
+  background: #FAFAFA;
+  border-radius: var(--radius);
+  padding: 20rpx 24rpx;
+}
+.msg-header {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-bottom: 10rpx;
+}
+.msg-nickname {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.msg-rating {
+  font-size: 22rpx;
+  color: #FF9800;
+}
+.msg-time {
+  font-size: 20rpx;
+  color: var(--text-hint);
+  margin-left: auto;
+}
+.msg-body {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+.message-empty {
+  text-align: center;
+  padding: 40rpx 0;
+  font-size: 26rpx;
+  color: var(--text-hint);
+}
+
+/* ===== 游览贴士 ===== */
+.tips-section {
+  margin: 0 24rpx 20rpx;
+  background: #FFF8E1;
+  border-radius: var(--radius-lg);
+  padding: 28rpx 32rpx;
+  border-left: 6rpx solid var(--accent);
+}
+
+.tips-header {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.tips-icon {
+  font-size: 28rpx;
+}
+
+.tips-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #E65100;
+}
+
+.tips-text {
+  font-size: 24rpx;
+  color: #BF360C;
+  line-height: 1.7;
+}
+
+/* ===== 底部操作栏 ===== */
+.bottom-bar {
+  display: flex;
+  gap: 20rpx;
+  padding: 20rpx 24rpx;
+  background: #fff;
+  box-shadow: 0 -4rpx 20rpx rgba(0,0,0,0.06);
+  position: sticky;
+  bottom: 0;
+}
+
+.bar-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx;
+  padding: 24rpx;
+  border-radius: var(--radius);
+  font-size: 30rpx;
+  font-weight: 600;
+  border: none;
+}
+
+.bar-btn.primary {
+  background: var(--primary);
+  color: #fff;
+}
+
+.bar-btn.primary:active {
+  background: var(--primary-dark);
+}
+
+.bar-btn.outline {
+  background: #fff;
+  color: var(--primary);
+  border: 2rpx solid var(--divider);
+}
+
+.bar-btn.outline:active {
+  background: var(--bg-light);
+}
+
+/* ===== 底部安全区 ===== */
+.bottom-safe {
+  height: 32rpx;
+}
+
+/* ===== 景点不存在 ===== */
+.not-found {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 16rpx;
+}
+
+.nf-icon {
+  font-size: 80rpx;
+}
+
+.nf-text {
+  font-size: 28rpx;
+  color: var(--text-hint);
+}

@@ -1,0 +1,16 @@
+{
+  "name": "yuedu-park-server",
+  "version": "1.0.0",
+  "description": "岳渎公园 · 后端服务（景点 / 留言 / 天气）",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node --watch index.js",
+    "init-db": "node db.js"
+  },
+  "dependencies": {
+    "sql.js": "^1.10.0",
+    "cors": "^2.8.5",
+    "express": "^4.21.0"
+  }
+}

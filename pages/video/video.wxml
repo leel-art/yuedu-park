@@ -1,0 +1,101 @@
+<!-- pages/video/video.wxml —— 视频介绍页（全屏沉浸式） -->
+<view class="page-video" wx:if="{{spot}}">
+
+  <!-- ===== 状态栏占位（自定义导航用） ===== -->
+  <view class="status-bar" style="height: {{statusBarHeight}}px;"></view>
+
+  <!-- ===== 顶部返回栏（半透明） ===== -->
+  <view class="video-nav" style="top: {{statusBarHeight}}px;">
+    <view class="nav-back" bindtap="goBack">
+      <text class="back-icon">‹</text>
+      <text>返回</text>
+    </view>
+    <text class="nav-title">{{spot.name}}</text>
+    <view class="nav-placeholder"></view>
+  </view>
+
+  <!-- ===== 视频播放器（全屏宽度） ===== -->
+  <view class="player-wrap">
+    <video
+      id="spotVideo"
+      class="video-player"
+      src="{{spot.videoUrl}}"
+      poster="{{spot.videoPoster}}"
+      object-fit="contain"
+      autoplay="{{autoPlay}}"
+      controls="{{true}}"
+      show-center-play-btn="{{true}}"
+      show-play-btn="{{true}}"
+      enable-auto-rotation="{{true}}"
+      show-screen-lock-button="{{true}}"
+      play-btn-position="center"
+      bindplay="onPlay"
+      bindpause="onPause"
+      bindended="onEnded"
+      binderror="onError"
+      bindtimeupdate="onTimeUpdate"
+      bindfullscreenchange="onFullscreenChange"
+    >
+      <!-- 视频加载前的封面占位 -->
+      <cover-view class="cover-poster" slot="poster">
+        <cover-image class="poster-img" src="{{spot.videoPoster}}" />
+        <cover-view class="poster-center" wx:if="{{!isPlaying}}">
+          <cover-view class="play-btn-cover">
+            <cover-view class="play-triangle"></cover-view>
+          </cover-view>
+          <cover-view class="play-label">视频讲解</cover-view>
+        </cover-view>
+      </cover-view>
+    </video>
+  </view>
+
+  <!-- ===== 视频信息卡片 ===== -->
+  <view class="video-info">
+    <view class="vi-header">
+      <view class="vi-text">
+        <text class="vi-spot-name">{{spot.name}}</text>
+        <text class="vi-spot-subtitle">{{spot.subtitle}}</text>
+      </view>
+      <view class="vi-duration" wx:if="{{duration > 0}}">
+        <text class="duration-text">{{formattedDuration}}</text>
+      </view>
+    </view>
+
+    <!-- 进度条（仅显示，真实进度由 video 控件自带的进度条处理） -->
+    <view class="vi-progress">
+      <view class="vi-bar">
+        <view class="vi-fill" style="width: {{progress}}%"></view>
+      </view>
+    </view>
+
+    <!-- 简介 -->
+    <view class="vi-desc">
+      <text class="vi-desc-label">📍 {{spot.category}} · 视频讲解</text>
+      <text class="vi-desc-text">{{spot.description}}</text>
+    </view>
+  </view>
+
+  <!-- ===== 操作按钮 ===== -->
+  <view class="video-actions">
+    <button class="va-btn primary" bindtap="goToSpotDetail">
+      📖 查看详细讲解
+    </button>
+    <button class="va-btn outline" bindtap="goToSpotVideo" wx:if="{{nextSpot}}">
+      ▶️ 下一个景点: {{nextSpot.name}}
+    </button>
+  </view>
+
+  <!-- ===== 扫码标识（从扫码进入时显示） ===== -->
+  <view class="scan-marker" wx:if="{{isFromScan}}">
+    <text class="scan-icon">📱</text>
+    <text class="scan-text">已为您自动定位到此景点</text>
+  </view>
+
+  <view class="bottom-safe"></view>
+</view>
+
+<!-- 加载中 -->
+<view class="video-loading" wx:if="{{!spot}}">
+  <text class="loading-icon">🎬</text>
+  <text class="loading-text">加载视频中...</text>
+</view>
